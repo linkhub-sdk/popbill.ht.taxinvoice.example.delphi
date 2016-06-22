@@ -539,12 +539,12 @@ begin
                 end;
         end;
 
-        tmp := 'code : ' + IntToStr(searchInfo.code) + #13;
-        tmp := tmp + 'total : ' + IntToStr(searchInfo.total) + #13;
-        tmp := tmp + 'perPage : ' + IntToStr(searchInfo.perPage) + #13;
-        tmp := tmp + 'pageNum : ' + IntToStr(searchInfo.pageNum) + #13;
-        tmp := tmp + 'pageCount : ' + IntToStr(searchInfo.pageCount)+ #13;
-        tmp := tmp + 'message : ' + searchInfo.message + #13 + #13;
+        tmp := 'code (응답코드) : ' + IntToStr(searchInfo.code) + #13;
+        tmp := tmp + 'total (총 검색결과 건수) : ' + IntToStr(searchInfo.total) + #13;
+        tmp := tmp + 'perPage (페이지당 검색개수) : ' + IntToStr(searchInfo.perPage) + #13;
+        tmp := tmp + 'pageNum (페이지 번호) : ' + IntToStr(searchInfo.pageNum) + #13;
+        tmp := tmp + 'pageCount (페이지 개수) : ' + IntToStr(searchInfo.pageCount)+ #13;
+        tmp := tmp + 'message (응답 메시지) : ' + searchInfo.message + #13 + #13;
 
 
         for i:=0 to length(searchInfo.list)-1 do
@@ -648,10 +648,10 @@ begin
                 end;
         end;
 
-        tmp := 'count : ' + IntToStr(summaryInfo.count) + #13;
-        tmp := tmp + 'supplyCostTotal : ' + IntToStr(summaryInfo.supplyCostTotal) + #13;
-        tmp := tmp + 'taxTotal : ' + IntToStr(summaryInfo.taxTotal) + #13;
-        tmp := tmp + 'amountTotal : ' + IntToStr(summaryInfo.amountTotal) + #13;
+        tmp := 'count (수집 결과 건수) : ' + IntToStr(summaryInfo.count) + #13;
+        tmp := tmp + 'supplyCostTotal (공급가액 합계) : ' + IntToStr(summaryInfo.supplyCostTotal) + #13;
+        tmp := tmp + 'taxTotal (세액 합계) : ' + IntToStr(summaryInfo.taxTotal) + #13;
+        tmp := tmp + 'amountTotal (합계 금액) : ' + IntToStr(summaryInfo.amountTotal) + #13;
         
         ShowMessage(tmp);
 
