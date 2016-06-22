@@ -566,37 +566,9 @@ begin
                         StringGrid1.Cells[7, i+1] :='¿œπ›';
                 
                 StringGrid1.Cells[8, i+1] := searchInfo.list[i].ntsconfirmNum;
-                                
-                {
-                tmp := tmp + searchInfo.list[i].ntsconfirmNum + ' | ';
-                tmp := tmp + searchInfo.list[i].writeDate + ' | ';
-                tmp := tmp + searchInfo.list[i].issueDate + ' | ';
-                tmp := tmp + searchInfo.list[i].sendDate + ' | ';
-                tmp := tmp + searchInfo.list[i].taxType + ' | ';
-                tmp := tmp + searchInfo.list[i].purposeType + ' | ';
-                tmp := tmp + BoolToStr(searchInfo.list[i].modifyYN) + ' | ';
-                tmp := tmp + searchInfo.list[i].invoicerCorpNum + ' | ';
-                tmp := tmp + searchInfo.list[i].invoicerCorpName + ' | ';
-                tmp := tmp + searchInfo.list[i].invoicerCEOName + ' | ';
-                tmp := tmp + searchInfo.list[i].invoicerEmail + ' | ';
-                tmp := tmp + searchInfo.list[i].invoiceeCorpNum + ' | ';
-                tmp := tmp + searchInfo.list[i].invoiceeCorpName + ' | ';
-                tmp := tmp + searchInfo.list[i].invoiceeCEOName + ' | ';
-                tmp := tmp + searchInfo.list[i].invoiceeEmail1 + ' | ';
-                tmp := tmp + searchInfo.list[i].supplyCostTotal + ' | ';
-                tmp := tmp + searchInfo.list[i].taxTotal + ' | ';
-                tmp := tmp + searchInfo.list[i].totalAmount + ' | ';
-                tmp := tmp + searchInfo.list[i].purchaseDate + ' | ';
-                tmp := tmp + searchInfo.list[i].itemName + ' | ';
-                tmp := tmp + searchInfo.list[i].supplyCost + ' | ';
-                tmp := tmp + searchInfo.list[i].tax;
-                tmp := tmp + #13;
-                }
 
         end;
-
         ShowMessage(tmp);
-
 end;
 
 procedure TTfrmExample.btnSummaryClick(Sender: TObject);
