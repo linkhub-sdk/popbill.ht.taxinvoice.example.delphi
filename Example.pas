@@ -382,10 +382,10 @@ begin
         DType := 'W';
 
         // 시작일자, 날자형식(yyyyMMdd)
-        SDate := '20160501';
+        SDate := '20150501';
 
         // 종료일자, 날자형식(yyyyMMdd)
-        EDate := '20160731';
+        EDate := '20150701';
         
         try
                 jobID := htTaxinvoiceService.RequestJob(txtCorpNum.text, queryType, DType, SDate, EDate);
@@ -483,7 +483,7 @@ var
         purposeType : array of string;
         taxRegIDType : string;
         taxRegID : array of string;
-        taxRegIDYN : Boolean;
+        taxRegIDYN : string;
         page : Integer;
         perPage : Integer;
         order : String;
@@ -510,15 +510,14 @@ begin
         purposeType[2] := 'N';  
 
         //종사업장번호 유무 
-        TaxRegIDYN := false;
+        TaxRegIDYN := '';      // 공백 - 전체조회, 0-종사업장번호 없는것만 조회, 1-유형, 목록으로 검색
 
         // 종사업업자번호 사업자 유형 S-공급자, B-공급받는자, T-수탁자
-        TaxRegIDType := 'S';
+        TaxRegIDType := 'B';
 
         // 종사업장번호 배열
-        SetLength(taxRegID, 2);
-        taxRegID[0] := '1001';
-        taxRegID[1] := '0007';
+        SetLength(taxRegID, 1);
+        taxRegID[0] := '';
 
         // 페이지번호 
         Page := 1;
@@ -582,7 +581,7 @@ var
         purposeType : array of string;
         taxRegIDType : string;
         taxRegID : array of string;
-        taxRegIDYN : Boolean;
+        taxRegIDYN : string;
         summaryInfo : TTaxinvoiceSummary;
         tmp : string;
 begin
@@ -603,16 +602,15 @@ begin
         purposeType[1] := 'C';
         purposeType[2] := 'N';
 
-        //종사업장번호 유무
-        TaxRegIDYN := false;
+        //종사업장번호 유무 
+        TaxRegIDYN := '';      // 공백 - 전체조회, 0-종사업장번호 없는것만 조회, 1-유형, 목록으로 검색
 
         // 종사업업자번호 사업자 유형 S-공급자, B-공급받는자, T-수탁자
-        TaxRegIDType := 'S';
+        TaxRegIDType := 'B';
 
         // 종사업장번호 배열
-        SetLength(taxRegID, 2);
-        taxRegID[0] := '1111';
-        taxRegID[1] := '1000';
+        SetLength(taxRegID, 1);
+        taxRegID[0] := '';
 
         try
                 summaryInfo := htTaxinvoiceService.Summary(txtCorpNum.text, txtJobId.text,DocType,TaxType, PurposeType, TaxRegIDType, TaxRegID, TaxRegIDYN);

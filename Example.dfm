@@ -1,6 +1,6 @@
 object TfrmExample: TTfrmExample
-  Left = 604
-  Top = 123
+  Left = 448
+  Top = 118
   Width = 893
   Height = 794
   Caption = '팝빌 홈택스 전자(세금)계산서 연계 API SDK Example'
@@ -202,7 +202,7 @@ object TfrmExample: TTfrmExample
     Height = 21
     ImeName = 'Microsoft IME 2010'
     TabOrder = 1
-    Text = '1234567890'
+    Text = '4108600477'
   end
   object txtUserID: TEdit
     Left = 384
@@ -211,7 +211,7 @@ object TfrmExample: TTfrmExample
     Height = 21
     ImeName = 'Microsoft IME 2010'
     TabOrder = 2
-    Text = 'testkorea'
+    Text = 'innoposttest'
   end
   object TGroupBox
     Left = 8
