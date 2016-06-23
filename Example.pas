@@ -382,10 +382,10 @@ begin
         DType := 'W';
 
         // 시작일자, 날자형식(yyyyMMdd)
-        SDate := '20150501';
+        SDate := '20160501';
 
         // 종료일자, 날자형식(yyyyMMdd)
-        EDate := '20150731';
+        EDate := '20160731';
         
         try
                 jobID := htTaxinvoiceService.RequestJob(txtCorpNum.text, mgtKeyType, DType, SDate, EDate);
