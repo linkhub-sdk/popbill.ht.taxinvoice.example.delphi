@@ -173,7 +173,6 @@ begin
         joinInfo.CEOName := '대표자성명';
         joinInfo.CorpName := '상호';
         joinInfo.Addr := '주소';
-        joinInfo.ZipCode := '500-100';
         joinInfo.BizType := '업태';
         joinInfo.BizClass := '업종';
         joinInfo.ID     := 'userid';  //6자 이상 20자 미만.
@@ -373,7 +372,9 @@ var
         EDate: String;
         jobID: String;
 begin
+        // 수집 요청시 반환되는 작업아이디(jobID)의 유효시간은 1시간입니다.
 
+        
         // 전자세금계산서 유형 SELL- 매출, BUY- 매입, TRUSTEE-위수탁  
         mgtKeyType := EnumMgtKeyType(GetEnumValue(TypeInfo(EnumMgtKeyType),'SELL'));
 
@@ -381,10 +382,10 @@ begin
         DType := 'W';
 
         // 시작일자, 날자형식(yyyyMMdd)
-        SDate := '20160501';
+        SDate := '20150501';
 
         // 종료일자, 날자형식(yyyyMMdd)
-        EDate := '20160731';
+        EDate := '20150731';
         
         try
                 jobID := htTaxinvoiceService.RequestJob(txtCorpNum.text, mgtKeyType, DType, SDate, EDate);
@@ -408,7 +409,6 @@ var
 begin
         try
                 // 수집상태확인 GetJobState(팝빌회원 사업자번호, 작업아이디)
-                // 작업아이디는 수집요청(requestJob) 호출시 반환됩니다.
                 jobInfo := htTaxinvoiceService.GetJobState(txtCorpNum.text, txtJobId.text);
 
         except
@@ -517,8 +517,8 @@ begin
 
         // 종사업장번호 배열
         SetLength(taxRegID, 2);
-        taxRegID[0] := '1111';
-        taxRegID[1] := '1000';
+        taxRegID[0] := '1001';
+        taxRegID[1] := '0007';
 
         // 페이지번호 
         Page := 1;
@@ -557,6 +557,9 @@ begin
                 StringGrid1.Cells[4, i+1] := searchInfo.list[i].invoiceeCorpNum;
                 StringGrid1.Cells[5, i+1] := searchInfo.list[i].taxType;
                 StringGrid1.Cells[6, i+1] := searchInfo.list[i].supplyCostTotal;
+                //  API호출시 반환되는 추가적인 전자(세금)계산서 항목은
+                //  [링크허브]팝빌 -홈택스 전자세금계산서 API 연동매뉴얼 '4.1.1. Search' 를 참조하시기 바랍니다.
+
 
                 if searchInfo.list[i].modifyYN then
                 begin
@@ -568,6 +571,7 @@ begin
                 StringGrid1.Cells[8, i+1] := searchInfo.list[i].ntsconfirmNum;
 
         end;
+
         ShowMessage(tmp);
 end;
 
@@ -584,8 +588,8 @@ var
 begin
         // 문서형태 배열, N - 일반 전자(세금)계산서, M - 수정(전자)세금계산서
         SetLength(docType, 2);
-        docType[0] := 'M';
-        docType[1] := 'N';
+        docType[0] := 'N';
+        docType[1] := 'M';
 
         // 과세형태 배열, T - 과세, N - 면세, Z - 영세
         SetLength(taxType, 3);
@@ -597,9 +601,9 @@ begin
         SetLength(purposeType, 3);
         purposeType[0] := 'R';
         purposeType[1] := 'C';
-        purposeType[2] := 'N';        
+        purposeType[2] := 'N';
 
-        //종사업장번호 유무 
+        //종사업장번호 유무
         TaxRegIDYN := false;
 
         // 종사업업자번호 사업자 유형 S-공급자, B-공급받는자, T-수탁자
@@ -731,7 +735,7 @@ begin
 
         tmp := 'ResultCode (응답코드) : ' + IntToStr(response.ResultCode) + #13;
         tmp := tmp + 'Message (국세청승인번호) : ' + response.Message + #13;
-        tmp := tmp + 'retObject (XML문서) : ' + response.retObject;
+        tmp := tmp + 'retObject (XML문서) : ' + #13 + response.retObject;
 
         ShowMessage(tmp);
 
