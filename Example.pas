@@ -510,14 +510,14 @@ begin
         purposeType[2] := 'N';  
 
         // 종사업업자번호 사업자 유형 S-공급자, B-공급받는자, T-수탁자
-        TaxRegIDType := 'B';
+        TaxRegIDType := 'S';
 
         // 종사업장번호 배열
         SetLength(taxRegID, 1);
         taxRegID[0] := '';
 
         //종사업장번호 유무
-        TaxRegIDYN := '1';      // 공백 - 전체조회, 0-종사업장번호 없는것만 조회, 1-종사업장번호 조건에 따라 검색
+        TaxRegIDYN := '';      // 공백 - 전체조회, 0-종사업장번호 없는것만 조회, 1-종사업장번호 조건에 따라 검색
 
         // 페이지번호 
         Page := 1;
