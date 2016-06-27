@@ -133,7 +133,7 @@ var
         response : TResponse;
 begin
         try
-                response := htTaxinvoiceService.CheckIsMember(txtCorpNum.text,LinkID);
+                response := htTaxinvoiceService.CheckIsMember(txtCorpNum.text, LinkID);
         except
                 on le : EPopbillException do begin
                         ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
@@ -382,10 +382,10 @@ begin
         DType := 'W';
 
         // 시작일자, 날자형식(yyyyMMdd)
-        SDate := '20150501';
+        SDate := '20160501';
 
         // 종료일자, 날자형식(yyyyMMdd)
-        EDate := '20150701';
+        EDate := '20160701';
         
         try
                 jobID := htTaxinvoiceService.RequestJob(txtCorpNum.text, queryType, DType, SDate, EDate);
@@ -509,15 +509,15 @@ begin
         purposeType[1] := 'C';
         purposeType[2] := 'N';  
 
-        //종사업장번호 유무 
-        TaxRegIDYN := '';      // 공백 - 전체조회, 0-종사업장번호 없는것만 조회, 1-유형, 목록으로 검색
-
         // 종사업업자번호 사업자 유형 S-공급자, B-공급받는자, T-수탁자
         TaxRegIDType := 'B';
 
         // 종사업장번호 배열
         SetLength(taxRegID, 1);
         taxRegID[0] := '';
+
+        //종사업장번호 유무
+        TaxRegIDYN := '1';      // 공백 - 전체조회, 0-종사업장번호 없는것만 조회, 1-종사업장번호 조건에 따라 검색
 
         // 페이지번호 
         Page := 1;
@@ -602,15 +602,15 @@ begin
         purposeType[1] := 'C';
         purposeType[2] := 'N';
 
-        //종사업장번호 유무 
-        TaxRegIDYN := '';      // 공백 - 전체조회, 0-종사업장번호 없는것만 조회, 1-유형, 목록으로 검색
-
         // 종사업업자번호 사업자 유형 S-공급자, B-공급받는자, T-수탁자
-        TaxRegIDType := 'B';
+        TaxRegIDType := 'S';
 
         // 종사업장번호 배열
         SetLength(taxRegID, 1);
         taxRegID[0] := '';
+
+        //종사업장번호 유무 
+        TaxRegIDYN := '';      // 공백 - 전체조회, 0-종사업장번호 없는것만 조회, 1-유형, 목록으로 검색
 
         try
                 summaryInfo := htTaxinvoiceService.Summary(txtCorpNum.text, txtJobId.text,DocType,TaxType, PurposeType, TaxRegIDType, TaxRegID, TaxRegIDYN);
