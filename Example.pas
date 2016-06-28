@@ -509,8 +509,8 @@ begin
         purposeType[1] := 'C';
         purposeType[2] := 'N';  
 
-        // 종사업업자번호 사업자 유형 S-공급자, B-공급받는자, T-수탁자
-        TaxRegIDType := 'S';
+        // 종사업업자번호 사업자 유형 공백-전체조회, S-공급자, B-공급받는자, T-수탁자
+        TaxRegIDType := '';
 
         // 종사업장번호 배열
         SetLength(taxRegID, 1);
