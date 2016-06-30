@@ -482,7 +482,7 @@ var
         taxType : array of string;
         purposeType : array of string;
         taxRegIDType : string;
-        taxRegID : array of string;
+        taxRegID : string;
         taxRegIDYN : string;
         page : Integer;
         perPage : Integer;
@@ -512,9 +512,8 @@ begin
         // 종사업업자번호 사업자 유형 공백-전체조회, S-공급자, B-공급받는자, T-수탁자
         TaxRegIDType := '';
 
-        // 종사업장번호 배열
-        SetLength(taxRegID, 1);
-        taxRegID[0] := '';
+        // 종사업장번호 콤마(,)로 구분하여 구성.  ex) '1234,0001'
+        TaxRegID := '';
 
         //종사업장번호 유무
         TaxRegIDYN := '';      // 공백 - 전체조회, 0-종사업장번호 없는것만 조회, 1-종사업장번호 조건에 따라 검색
@@ -580,7 +579,7 @@ var
         taxType : array of string;
         purposeType : array of string;
         taxRegIDType : string;
-        taxRegID : array of string;
+        taxRegID : string;
         taxRegIDYN : string;
         summaryInfo : TTaxinvoiceSummary;
         tmp : string;
@@ -605,11 +604,10 @@ begin
         // 종사업업자번호 사업자 유형 S-공급자, B-공급받는자, T-수탁자
         TaxRegIDType := 'S';
 
-        // 종사업장번호 배열
-        SetLength(taxRegID, 1);
-        taxRegID[0] := '';
+        // 종사업장번호, 콤마(,)로 구분하여 구성 ex)0001,0007
+        taxRegID := '';
 
-        //종사업장번호 유무 
+        //종사업장번호 유무
         TaxRegIDYN := '';      // 공백 - 전체조회, 0-종사업장번호 없는것만 조회, 1-유형, 목록으로 검색
 
         try
