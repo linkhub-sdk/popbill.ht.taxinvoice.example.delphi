@@ -1,3 +1,23 @@
+{******************************************************************************}
+{                                                                              }
+{ 팝빌 홈택스 전자세금계산서 연계  API Delphi SDK Example                      }
+{                                                                              }
+{ - 델파이 SDK 적용방법 안내 : http://blog.linkhub.co.kr/1059                  }
+{ - 업데이트 일자 : 2016-10-06                                                 }
+{ - 연동 기술지원 연락처 : 1600-8536 / 070-4304-2991 (정요한 대리)             }
+{ - 연동 기술지원 이메일 : code@linkhub.co.kr                                  }
+{                                                                              }
+{ <테스트 연동개발 준비사항>                                                   }
+{ (1) 38, 41번 라인에 선언된 링크아이디(LinkID)와 비밀키(SecretKey)를          }
+{    링크허브 가입시 메일로 발급받은 인증정보로 수정                           }
+{ (2) 팝빌 개발용 사이트(test.popbill.com)에 연동회원으로 가입                 }
+{ (3) 홈택스 공인인증서 등록, 2가지 방법가능                                   }
+{     - 팝빌사이트 로그인 > [홈택스연계] > 화면왼쪽 하단탭 [환경설정] >        }
+{       [공인인증서 관리]                                                      }
+{    - 홈택스 공인인증서등록 URL (GetCertificatePopUpURL API)을 이용하여 등록  }
+{                                                                              }
+{******************************************************************************}
+
 unit Example;
 
 interface
@@ -8,8 +28,15 @@ Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   Popbill, PopbillHTTaxinvoice, ExtCtrls, Grids;
   
 const
+        {**********************************************************************}
+        { - 인증정보(링크아이디, 비밀키)는 파트너의 연동회원을 식별하는        }
+        {   인증에 사용되므로 유출되지 않도록 주의하시기 바랍니다              }
+        { - 상업용 전환이후에도 인증정보는 변경되지 않습니다.                  }
+        {**********************************************************************}
+        
         //링크아이디.
         LinkID = 'TESTER';
+        
         // 파트너 통신용 비밀키. 유출 주의.
         SecretKey = 'SwWxqU+0TErBXy/9TVjIPEnI0VTUMMSQZtJf3Ed8q3I=';
 
@@ -105,7 +132,7 @@ procedure TTfrmExample.FormCreate(Sender: TObject);
 begin
         htTaxinvoiceService := THometaxTIService.Create(LinkID,SecretKey);
 
-        //연동환경 설정값, true(테스트용), false(상업용)
+        //연동환경 설정값, true(개발용), false(상업용)
         htTaxinvoiceService.IsTest := true;
         
         //Exception 처리 설정값. 미기재시 true(기본값) 
@@ -132,6 +159,11 @@ procedure TTfrmExample.btnCheckIsMemberClick(Sender: TObject);
 var
         response : TResponse;
 begin
+        {**********************************************************************}
+        { 해당 사업자의 파트너 연동회원 가입여부를 확인합니다.                 }
+        { - LinkID는 인증정보에 설정되어 있는 링크아이디 입니다. (41번라인)    }
+        {**********************************************************************}
+        
         try
                 response := htTaxinvoiceService.CheckIsMember(txtCorpNum.text, LinkID);
         except
@@ -149,6 +181,10 @@ procedure TTfrmExample.btnCheckIDClick(Sender: TObject);
 var
         response : TResponse;
 begin
+        {**********************************************************************}
+        { 회원가입(JoinMember API)을 호출하기 전 아이디 중복을 확인합니다.     }
+        {**********************************************************************}
+        
         try
                 response := htTaxinvoiceService.CheckID(txtUserID.Text);
         except
@@ -168,21 +204,53 @@ var
         response : TResponse;
         joinInfo : TJoinForm;
 begin
-        joinInfo.LinkID := LinkID;        //링크아이디
-        joinInfo.CorpNum := '1231212312'; //사업자번호 '-' 제외.
-        joinInfo.CEOName := '대표자성명';
-        joinInfo.CorpName := '상호';
-        joinInfo.Addr := '주소';
-        joinInfo.BizType := '업태';
-        joinInfo.BizClass := '업종';
-        joinInfo.ID     := 'userid';  //6자 이상 20자 미만.
-        joinInfo.PWD    := 'pwd_must_be_long_enough'; //6자 이상 20자 미만.
-        joinInfo.ContactName := '담당자명';
-        joinInfo.ContactTEL :='02-999-9999';
-        joinInfo.ContactHP := '010-1234-5678';
-        joinInfo.ContactFAX := '02-999-9998';
-        joinInfo.ContactEmail := 'test@test.com';
+        {**********************************************************************}
+        {    파트너의 연동회원으로 회원가입을 요청합니다.                      }
+        {    아이디 중복확인은 btnCheckIDClick 프로시져를 참조하시기 바랍니다. }
+        {**********************************************************************}
 
+        // 링크아이디
+        joinInfo.LinkID := LinkID;
+
+        // 사업자번호 '-' 제외, 10자리
+        joinInfo.CorpNum := '4364364364';
+
+        // 대표자성명, 최대 30자
+        joinInfo.CEOName := '대표자성명';
+
+        // 상호명, 최대 70자
+        joinInfo.CorpName := '링크허브';
+
+        // 주소, 최대 300자
+        joinInfo.Addr := '주소';
+
+        // 업태, 최대 40자
+        joinInfo.BizType := '업태';
+
+        // 종목, 최대 40자
+        joinInfo.BizClass := '종목';
+
+        // 아이디, 6자이상 20자 미만
+        joinInfo.ID     := 'userid';
+
+        // 비밀번호, 6자이상 20자 미만
+        joinInfo.PWD    := 'pwd_must_be_long_enough';
+
+        // 담당자명, 최대 30자
+        joinInfo.ContactName := '담당자명';
+
+        // 담당자 연락처, 최대 20자
+        joinInfo.ContactTEL :='070-4304-2991';
+
+        // 담당자 휴대폰번호, 최대 20자
+        joinInfo.ContactHP := '010-000-1111';
+
+        // 담당자 팩스번호, 최대 20자
+        joinInfo.ContactFAX := '02-6442-9700';
+
+        // 담당자 메일, 최대 70자
+        joinInfo.ContactEmail := 'code@linkhub.co.kr';
+        
         try
                 response := htTaxinvoiceService.JoinMember(joinInfo);
         except
@@ -200,6 +268,12 @@ procedure TTfrmExample.btnGetBalanceClick(Sender: TObject);
 var
         balance : Double;
 begin
+        {**********************************************************************}
+        { 연동회원의 잔여포인트를 확인합니다. 과금방식이 연동과금이 아닌       }
+        { 파트너과금인 경우 파트너 잔여포인트 확인(GetPartnerBalance API)를    }
+        { 이용하시기 바랍니다                                                  }
+        {**********************************************************************}
+        
         try
                 balance := htTaxinvoiceService.GetBalance(txtCorpNum.text);
         except
@@ -217,7 +291,13 @@ procedure TTfrmExample.btnGetPartnerBalanceClick(Sender: TObject);
 var
         balance : Double;
 begin
-         try
+        {**********************************************************************}
+        { 파트너의 잔여포인트를 확인합니다. 과금방식이 파트너과금이 아닌       }
+        { 연동과금인 경우 연동회원 잔여포인트 확인(GetBalance API)를           }
+        { 이용하시기 바랍니다                                                  }
+        {**********************************************************************}
+        
+        try
                 balance := htTaxinvoiceService.GetPartnerBalance(txtCorpNum.text);
         except
                 on le : EPopbillException do begin
@@ -235,15 +315,36 @@ var
         response : TResponse;
         joinInfo : TJoinContact;
 begin
-        joinInfo.id := 'userid';                        // [필수] 아이디 (6자 이상 20자 미만)
-        joinInfo.pwd := 'thisispassword';               // [필수] 비밀번호 (6자 이상 20자 미만)
-        joinInfo.personName := '담당자성명';            // [필수] 담당자명(한글이나 영문 30자 이내)
-        joinInfo.tel := '070-7510-3710';                // [필수] 연락처
-        joinInfo.hp := '010-1111-2222';                 // 휴대폰번호
-        joinInfo.fax := '02-6442-9700';                 // 팩스번호
-        joinInfo.email := 'test@test.com';              // [필수] 이메일
-        joinInfo.searchAllAllowYN := false;             // 조회권한(true 회사조회/ false 개인조회)
-        joinInfo.mgrYN     := false;                    // 관리자 권한여부 
+        {**********************************************************************}
+        { 연동회원의 담당자를 신규로 등록합니다.                               }
+        {**********************************************************************}
+
+        // [필수] 담당자 아이디 (6자 이상 20자 미만)
+        joinInfo.id := 'testkorea1004_01';
+        
+        // [필수] 비밀번호 (6자 이상 20자 미만)
+        joinInfo.pwd := 'thisispassword';
+
+        // [필수] 담당자명(한글이나 영문 30자 이내)
+        joinInfo.personName := '담당자성명';
+
+        // [필수] 연락처
+        joinInfo.tel := '070-4304-2991';
+
+        // 휴대폰번호
+        joinInfo.hp := '010-1111-2222';
+
+        // 팩스번호
+        joinInfo.fax := '02-6442-9700';
+        
+        // [필수] 이메일
+        joinInfo.email := 'test@test.com';
+
+        // 회사조회 권한여부, true-회사조회 / false-개인조회
+        joinInfo.searchAllAllowYN := false;
+
+        // 관리자 권한여부
+        joinInfo.mgrYN := false;
 
         try
                 response := htTaxinvoiceService.RegistContact(txtCorpNum.text,joinInfo,txtUserID.text);
@@ -263,6 +364,9 @@ var
         tmp : string;
         i : Integer;
 begin
+        {**********************************************************************}
+        { 연동회원의 담당자 목록을 확인합니다.                                 }
+        {**********************************************************************}
 
         try
                 InfoList := htTaxinvoiceService.ListContact(txtCorpNum.text,txtUserID.text);
@@ -294,15 +398,32 @@ var
         contactInfo : TContactInfo;
         response : TResponse;
 begin
+        {**********************************************************************}
+        { 연동회원의 담당자 정보를 수정합니다.                                 }
+        {**********************************************************************}
+
         contactInfo := TContactInfo.Create;
 
-        contactInfo.personName := '테스트 담당자';      // 담당자명
-        contactInfo.tel := '070-7510-3710';             // 연락처
-        contactInfo.hp := '010-4324-1111';              // 휴대폰번호
-        contactInfo.email := 'test@test.com';           // 이메일 주소
-        contactInfo.fax := '02-6442-9799';              // 팩스번호
-        contactInfo.searchAllAllowYN := true;           // 조회권한, true(회사조회), false(개인조회)
-        contactInfo.mgrYN := false;                     // 관리자권한 설정여부 
+        // 담당자명
+        contactInfo.personName := '테스트 담당자';
+
+        // 연락처
+        contactInfo.tel := '070-4304-2991';
+
+        // 휴대폰번호
+        contactInfo.hp := '010-4324-1111';
+
+        // 이메일 주소
+        contactInfo.email := 'test@test.com';
+        
+        // 팩스번호
+        contactInfo.fax := '02-6442-9799';
+
+        // 조회권한, true(회사조회), false(개인조회)
+        contactInfo.searchAllAllowYN := true;
+
+        // 관리자권한 설정여부
+        contactInfo.mgrYN := false; 
 
         try
                 response := htTaxinvoiceService.UpdateContact(txtCorpNum.text,contactInfo,txtUserID.Text);
@@ -321,6 +442,10 @@ var
         corpInfo : TCorpInfo;
         tmp : string;
 begin
+        {**********************************************************************}
+        { 연동회원의 회사정보를 확인합니다.                                    }
+        {**********************************************************************}
+
         try
                 corpInfo := htTaxinvoiceService.GetCorpInfo(txtCorpNum.text, txtUserID.Text);
         except
@@ -344,13 +469,26 @@ var
         corpInfo : TCorpInfo;
         response : TResponse;
 begin
+        {**********************************************************************}
+        { 연동회원의 회사정보를 수정합니다.                                    }
+        {**********************************************************************}
+
         corpInfo := TCorpInfo.Create;
 
-        corpInfo.ceoname := '대표자명';         // 대표자명
-        corpInfo.corpName := '팝빌';    // 회사명
-        corpInfo.bizType := '업태';             // 업태
-        corpInfo.bizClass := '업종';            // 업종
-        corpInfo.addr := '서울특별시 강남구 영동대로 517';  // 주소
+        // 대표자명, 최대 30자
+        corpInfo.ceoname := '대표자명';
+
+        // 상호, 최대 70자
+        corpInfo.corpName := '상호';
+
+        // 업태, 최대 40자
+        corpInfo.bizType := '업태';
+
+        // 종목, 최대 40자
+        corpInfo.bizClass := '종목';
+
+        // 주소, 최대 300자
+        corpInfo.addr := '서울특별시 강남구 영동대로 517';
         
         try
                 response := htTaxinvoiceService.UpdateCorpInfo(txtCorpNum.text,corpInfo,txtUserID.Text);
@@ -372,8 +510,10 @@ var
         EDate: String;
         jobID: String;
 begin
-        // 수집 요청시 반환되는 작업아이디(jobID)의 유효시간은 1시간입니다.
-
+        {**********************************************************************}
+        { 전자(세금)계산서 매출/매입 내역 수집을 요청합니다.                   }
+        {  - 수집 요청시 반환되는 작업아이디(jobID)의 유효시간은 1시간입니다.  }
+        {**********************************************************************}
         
         // 전자세금계산서 유형 SELL- 매출, BUY- 매입, TRUSTEE-위수탁
         queryType := SELL;
@@ -382,10 +522,10 @@ begin
         DType := 'W';
 
         // 시작일자, 날자형식(yyyyMMdd)
-        SDate := '20160501';
+        SDate := '20160901';
 
         // 종료일자, 날자형식(yyyyMMdd)
-        EDate := '20160701';
+        EDate := '20161031';
         
         try
                 jobID := htTaxinvoiceService.RequestJob(txtCorpNum.text, queryType, DType, SDate, EDate);
@@ -407,10 +547,14 @@ var
         jobInfo : THomeTaxTIJobInfo;
         tmp : String;
 begin
-        try
-                // 수집상태확인 GetJobState(팝빌회원 사업자번호, 작업아이디)
-                jobInfo := htTaxinvoiceService.GetJobState(txtCorpNum.text, txtJobId.text);
+        {**********************************************************************}
+        { 수집요청에 대한 상태를 확인합니다.                                   }
+        { - 응답항목에 관한 정보는 "[API 연동매뉴얼] > 3.2.2. GetJobState      }
+        {   수집 상태 확인" 을 참조하시기 바랍니다.                            }
+        {**********************************************************************}
 
+        try
+                jobInfo := htTaxinvoiceService.GetJobState(txtCorpNum.text, txtJobId.text);
         except
                 on le : EPopbillException do begin
                         ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
@@ -442,9 +586,13 @@ var
         tmp : String;
         i : Integer;
 begin
+        {**********************************************************************}
+        { 1시간 이내 수집 요청한 작업아이디 목록을 확인합니다.                 }
+        { - 응답항목에 관한 정보는 "[API 연동매뉴얼] > 3.2.3. ListActiveJob    }
+        {   수집상태 목록 확인" 을 참조하시기 바랍니다.                        }
+        {**********************************************************************}
 
         try
-                // 1시간 이내 수집 요청한 작업아이디 목록을 확인합니다.
                 jobList := htTaxinvoiceService.ListActiveState(txtCorpNum.text);
 
         except
@@ -491,6 +639,10 @@ var
         tmp : string;
         i : Integer; 
 begin
+        {**********************************************************************}
+        { 전자(세금)계산서 매출/매입 내역의 수집 결과를 조회합니다.            }
+        {  - 수집 요청시 반환되는 작업아이디(jobID)의 유효시간은 1시간입니다.  }
+        {**********************************************************************}
 
         // 문서형태 배열, N - 일반 전자(세금)계산서, M - 수정(전자)세금계산서
         SetLength(docType, 2);
@@ -509,14 +661,14 @@ begin
         purposeType[1] := 'C';
         purposeType[2] := 'N';  
 
-        // 종사업업자번호 사업자 유형 공백-전체조회, S-공급자, B-공급받는자, T-수탁자
+        // 종사업업자번호 사업자 유형, 공백-전체조회, S-공급자, B-공급받는자, T-수탁자
         TaxRegIDType := '';
 
-        // 종사업장번호 콤마(,)로 구분하여 구성.  ex) '1234,0001'
+        // 종사업장번호, 콤마(,)로 구분하여 구성.  ex) '1234,0001'
         TaxRegID := '';
 
-        //종사업장번호 유무
-        TaxRegIDYN := '';      // 공백 - 전체조회, 0-종사업장번호 없는것만 조회, 1-종사업장번호 조건에 따라 검색
+        //종사업장번호 유무,  공백 - 전체조회, 0-종사업장번호 없음, 1-종사업장번호 있음
+        TaxRegIDYN := '';
 
         // 페이지번호 
         Page := 1;
@@ -545,9 +697,12 @@ begin
         tmp := tmp + 'message (응답 메시지) : ' + searchInfo.message + #13 + #13;
 
 
-        for i:=0 to length(searchInfo.list)-1 do
-        begin
+        // 전자(세금)계산서 정보 출력
+        //  API호출시 반환되는 추가적인 전자(세금)계산서 항목은
 
+        //  [링크허브]팝빌 -홈택스 전자세금계산서 API 연동매뉴얼 '4.1.1. Search' 를 참조하시기 바랍니다.
+        for i := 0 to length(searchInfo.list) - 1 do
+        begin
                 StringGrid1.Cells[0, i+1] := searchInfo.list[i].writeDate;
                 StringGrid1.Cells[1, i+1] := searchInfo.list[i].issueDate;
                 StringGrid1.Cells[2, i+1] := searchInfo.list[i].sendDate;
@@ -555,16 +710,13 @@ begin
                 StringGrid1.Cells[4, i+1] := searchInfo.list[i].invoiceeCorpNum;
                 StringGrid1.Cells[5, i+1] := searchInfo.list[i].taxType;
                 StringGrid1.Cells[6, i+1] := searchInfo.list[i].supplyCostTotal;
-                //  API호출시 반환되는 추가적인 전자(세금)계산서 항목은
-                //  [링크허브]팝빌 -홈택스 전자세금계산서 API 연동매뉴얼 '4.1.1. Search' 를 참조하시기 바랍니다.
-
 
                 if searchInfo.list[i].modifyYN then
                 begin
-                        StringGrid1.Cells[7, i+1] :='수정';
+                        StringGrid1.Cells[7, i+1] := '수정';
                 end
                 else
-                        StringGrid1.Cells[7, i+1] :='일반';
+                        StringGrid1.Cells[7, i+1] := '일반';
                 
                 StringGrid1.Cells[8, i+1] := searchInfo.list[i].ntsconfirmNum;
 
@@ -584,6 +736,11 @@ var
         summaryInfo : TTaxinvoiceSummary;
         tmp : string;
 begin
+        {**********************************************************************}
+        { 전자(세금)계산서 매출/매입 내역의 수집 결과 요약정보를 조회합니다.   }
+        {  - 수집 요청시 반환되는 작업아이디(jobID)의 유효시간은 1시간입니다.  }
+        {**********************************************************************}
+
         // 문서형태 배열, N - 일반 전자(세금)계산서, M - 수정(전자)세금계산서
         SetLength(docType, 2);
         docType[0] := 'N';
@@ -601,14 +758,14 @@ begin
         purposeType[1] := 'C';
         purposeType[2] := 'N';
 
-        // 종사업업자번호 사업자 유형 S-공급자, B-공급받는자, T-수탁자
+        // 종사업업자번호 사업자 유형, S-공급자, B-공급받는자, T-수탁자
         TaxRegIDType := 'S';
 
         // 종사업장번호, 콤마(,)로 구분하여 구성 ex)0001,0007
         taxRegID := '';
 
-        //종사업장번호 유무
-        TaxRegIDYN := '';      // 공백 - 전체조회, 0-종사업장번호 없는것만 조회, 1-유형, 목록으로 검색
+        //종사업장번호 유무, 공백 - 전체조회, 0-종사업장번호 없음, 1-종사업장번호 있음
+        TaxRegIDYN := '';
 
         try
                 summaryInfo := htTaxinvoiceService.Summary(txtCorpNum.text, txtJobId.text,DocType,TaxType, PurposeType, TaxRegIDType, TaxRegID, TaxRegIDYN);
@@ -636,6 +793,12 @@ var
         ntsConfirmNum : string;
         i : Integer;
 begin
+        {**********************************************************************}
+        { 1건의 전자(세금)계산서 상세정보를 조회합니다.                        }
+        {  - 응답항목에 대한 정보는 "[API 연동매뉴얼] > 4.1.2. GetTaxinvoice   }
+        {    상세정보 확인 - JSON" 을 참조하시기 바랍니다.                     }
+        {**********************************************************************}
+
         ntsConfirmNum := txtntsconfirmNum.Text;
         
         try
@@ -718,6 +881,12 @@ var
         tmp : string;
         ntsConfirmNum : string;
 begin
+        {**********************************************************************}
+        { 1건의 전자(세금)계산서 상세정보를 조회합니다. (XML형식)              }
+        {  - 응답항목에 대한 정보는 "[API 연동매뉴얼] > 4.1.2. GetTaxinvoice   }
+        {    상세정보 확인 - JSON" 을 참조하시기 바랍니다.                     }
+        {**********************************************************************}
+
         ntsConfirmNum := txtntsconfirmNum.Text;
         
         try
@@ -741,6 +910,11 @@ procedure TTfrmExample.btnGetCertificatePopUpURLClick(Sender: TObject);
 var
         resultURL : String;
 begin
+        {**********************************************************************}
+        { 공인인증서 등록 팝업 URL을 반환합니다.                               }
+        { - URL 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.       }
+        {**********************************************************************}
+
         try
                 resultURL := htTaxinvoiceService.GetCertificatePopUpURL(txtCorpNum.Text,txtUserID.Text);
         except
@@ -757,6 +931,11 @@ procedure TTfrmExample.btnGetFlatRatePopUpURLClick(Sender: TObject);
 var
         resultURL : String;
 begin
+        {**********************************************************************}
+        { 정액제 서비스 신청 팝업 URL을 반환합니다.                            }
+        { - URL 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.       }
+        {**********************************************************************}
+
         try
                 resultURL := htTaxinvoiceService.GetFlatRatePopUpURL(txtCorpNum.Text,txtUserID.Text);
         except
@@ -773,6 +952,10 @@ procedure TTfrmExample.btnGetCertificateExpireDateClick(Sender: TObject);
 var
         expires : String;
 begin
+        {**********************************************************************}
+        { 팝빌에 등록된 홈택스 공인인증서 만료일자를 확인합니다.               }
+        {**********************************************************************}
+
         try
                 expires := htTaxinvoiceService.GetCertificateExpireDate(txtCorpNum.Text);
         except
@@ -790,6 +973,9 @@ var
         stateInfo : THometaxTIFlatRate;
         tmp : String;
 begin
+        {**********************************************************************}
+        { 정액제 서비스 상태를 확인합니다.                                     }
+        {**********************************************************************}
 
         try
                 stateInfo := htTaxinvoiceService.GetFlatRateState(txtCorpNum.text);
@@ -817,6 +1003,9 @@ var
         chargeInfo : THometaxTIChargeInfo;
         tmp : String;
 begin
+        {**********************************************************************}
+        { 홈택스 전자세금계산서 연계  API 서비스 과금정보를 확인합니다.        }
+        {**********************************************************************}
 
         try
                 chargeInfo := htTaxinvoiceService.GetChargeInfo(txtCorpNum.text);
@@ -846,8 +1035,12 @@ end;
 
 procedure TTfrmExample.btnGetPopbillURL_LOGINClick(Sender: TObject);
 var
-  resultURL : String;
+        resultURL : String;
 begin
+        {**********************************************************************}
+        {    팝빌(www.popbill.com)에 로그인된 팝업 URL을 반환합니다.           }
+        {    URL 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.      }
+        {**********************************************************************}
 
         try
                 resultURL := htTaxinvoiceService.getPopbillURL(txtCorpNum.Text,txtUserID.Text,'LOGIN');
@@ -865,7 +1058,11 @@ procedure TTfrmExample.btnGetPopbillURL_CHRGClick(Sender: TObject);
 var
   resultURL : String;
 begin
-
+        {**********************************************************************}
+        {    연동회원 포인트 충전 URL을 반환합니다.                            }
+        {    URL 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.      }
+        {**********************************************************************}
+        
         try
                 resultURL := htTaxinvoiceService.getPopbillURL(txtCorpNum.Text,txtUserID.Text,'CHRG');
         except
@@ -877,5 +1074,6 @@ begin
 
         ShowMessage('포인트충전 URL ' + #13 + resultURL);
 end;
+
 
 end.

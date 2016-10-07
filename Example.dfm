@@ -81,7 +81,7 @@ object TfrmExample: TTfrmExample
       TabOrder = 1
       object btnGetBalance: TButton
         Left = 8
-        Top = 24
+        Top = 56
         Width = 129
         Height = 25
         Caption = '잔여포인트 확인'
@@ -90,7 +90,7 @@ object TfrmExample: TTfrmExample
       end
       object btnGetPartnerBalance: TButton
         Left = 8
-        Top = 56
+        Top = 88
         Width = 129
         Height = 25
         Caption = '파트너포인트 확인'
@@ -99,7 +99,7 @@ object TfrmExample: TTfrmExample
       end
       object btnGetChargeInfo: TButton
         Left = 8
-        Top = 88
+        Top = 24
         Width = 129
         Height = 25
         Caption = '과금정보 확인'
@@ -202,7 +202,7 @@ object TfrmExample: TTfrmExample
     Height = 21
     ImeName = 'Microsoft IME 2010'
     TabOrder = 1
-    Text = '1234567890'
+    Text = '6798700433'
   end
   object txtUserID: TEdit
     Left = 384
@@ -211,7 +211,7 @@ object TfrmExample: TTfrmExample
     Height = 21
     ImeName = 'Microsoft IME 2010'
     TabOrder = 2
-    Text = 'testkorea'
+    Text = 'testkorea_linkhub'
   end
   object TGroupBox
     Left = 8
