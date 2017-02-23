@@ -1,10 +1,10 @@
 {******************************************************************************}
 {                                                                              }
-{ 팝빌 홈택스 전자세금계산서 연계  API Delphi SDK Example                      }
+{ 팝빌 홈택스 전자세금계산서 매입/매출 API Delphi SDK Example                  }
 {                                                                              }
 { - 델파이 SDK 적용방법 안내 : http://blog.linkhub.co.kr/1059                  }
-{ - 업데이트 일자 : 2016-10-06                                                 }
-{ - 연동 기술지원 연락처 : 1600-8536 / 070-4304-2991 (정요한 대리)             }
+{ - 업데이트 일자 : 2017-02-23                                                 }
+{ - 연동 기술지원 연락처 : 1600-8536 / 070-4304-2991                           }
 { - 연동 기술지원 이메일 : code@linkhub.co.kr                                  }
 {                                                                              }
 { <테스트 연동개발 준비사항>                                                   }
@@ -34,7 +34,7 @@ const
         { - 상업용 전환이후에도 인증정보는 변경되지 않습니다.                  }
         {**********************************************************************}
         
-        //링크아이디.
+        // 링크아이디.
         LinkID = 'TESTER';
         
         // 파트너 통신용 비밀키. 유출 주의.
@@ -347,7 +347,7 @@ begin
         joinInfo.mgrYN := false;
 
         try
-                response := htTaxinvoiceService.RegistContact(txtCorpNum.text,joinInfo,txtUserID.text);
+                response := htTaxinvoiceService.RegistContact(txtCorpNum.text, joinInfo);
         except
                 on le : EPopbillException do begin
                         ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
@@ -369,7 +369,7 @@ begin
         {**********************************************************************}
 
         try
-                InfoList := htTaxinvoiceService.ListContact(txtCorpNum.text,txtUserID.text);
+                InfoList := htTaxinvoiceService.ListContact(txtCorpNum.text);
         except
                 on le : EPopbillException do begin
                         ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
@@ -426,7 +426,7 @@ begin
         contactInfo.mgrYN := false; 
 
         try
-                response := htTaxinvoiceService.UpdateContact(txtCorpNum.text,contactInfo,txtUserID.Text);
+                response := htTaxinvoiceService.UpdateContact(txtCorpNum.text, contactInfo, txtUserID.text);
         except
                 on le : EPopbillException do begin
                         ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
@@ -447,7 +447,7 @@ begin
         {**********************************************************************}
 
         try
-                corpInfo := htTaxinvoiceService.GetCorpInfo(txtCorpNum.text, txtUserID.Text);
+                corpInfo := htTaxinvoiceService.GetCorpInfo(txtCorpNum.text);
         except
                 on le : EPopbillException do begin
                         ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
@@ -491,7 +491,7 @@ begin
         corpInfo.addr := '서울특별시 강남구 영동대로 517';
         
         try
-                response := htTaxinvoiceService.UpdateCorpInfo(txtCorpNum.text,corpInfo,txtUserID.Text);
+                response := htTaxinvoiceService.UpdateCorpInfo(txtCorpNum.text, corpInfo);
         except
                 on le : EPopbillException do begin
                         ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
@@ -916,7 +916,7 @@ begin
         {**********************************************************************}
 
         try
-                resultURL := htTaxinvoiceService.GetCertificatePopUpURL(txtCorpNum.Text,txtUserID.Text);
+                resultURL := htTaxinvoiceService.GetCertificatePopUpURL(txtCorpNum.Text);
         except
                 on le : EPopbillException do begin
                         ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
@@ -937,7 +937,7 @@ begin
         {**********************************************************************}
 
         try
-                resultURL := htTaxinvoiceService.GetFlatRatePopUpURL(txtCorpNum.Text,txtUserID.Text);
+                resultURL := htTaxinvoiceService.GetFlatRatePopUpURL(txtCorpNum.Text);
         except
                 on le : EPopbillException do begin
                         ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
@@ -1043,7 +1043,7 @@ begin
         {**********************************************************************}
 
         try
-                resultURL := htTaxinvoiceService.getPopbillURL(txtCorpNum.Text,txtUserID.Text,'LOGIN');
+                resultURL := htTaxinvoiceService.getPopbillURL(txtCorpNum.Text, 'LOGIN');
         except
                 on le : EPopbillException do begin
                         ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
@@ -1064,7 +1064,7 @@ begin
         {**********************************************************************}
         
         try
-                resultURL := htTaxinvoiceService.getPopbillURL(txtCorpNum.Text,txtUserID.Text,'CHRG');
+                resultURL := htTaxinvoiceService.getPopbillURL(txtCorpNum.Text, 'CHRG');
         except
                 on le : EPopbillException do begin
                         ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
