@@ -404,6 +404,9 @@ begin
 
         contactInfo := TContactInfo.Create;
 
+        // 담당자 아이디
+        contactInfo.id := 'testkorea';
+        
         // 담당자명
         contactInfo.personName := '테스트 담당자';
 
