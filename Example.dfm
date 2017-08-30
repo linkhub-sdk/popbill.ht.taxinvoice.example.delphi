@@ -241,7 +241,7 @@ object TfrmExample: TTfrmExample
   object TGroupBox
     Left = 8
     Top = 216
-    Width = 865
+    Width = 1169
     Height = 529
     Caption = '홈택스 전자세금계산서 연계 관련 API '
     TabOrder = 3
@@ -322,10 +322,10 @@ object TfrmExample: TTfrmExample
     object StringGrid1: TStringGrid
       Left = 24
       Top = 200
-      Width = 825
+      Width = 1025
       Height = 313
       BiDiMode = bdLeftToRight
-      ColCount = 9
+      ColCount = 10
       DefaultRowHeight = 27
       FixedCols = 0
       RowCount = 11
@@ -336,12 +336,13 @@ object TfrmExample: TTfrmExample
         62
         61
         64
-        140
-        102
-        56
+        68
+        138
+        128
         76
         87
-        165)
+        72
+        187)
     end
     object txtntsconfirmNum: TEdit
       Left = 464

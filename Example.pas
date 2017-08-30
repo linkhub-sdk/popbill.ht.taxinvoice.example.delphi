@@ -142,15 +142,16 @@ begin
         //Exception 처리 설정값. 미기재시 true(기본값) 
         htTaxinvoiceService.IsThrowException := true;
 
-        StringGrid1.Cells[0,0] := '작성일자';
-        StringGrid1.Cells[1,0] := '발행일자';
-        StringGrid1.Cells[2,0] := '전송일자';
-        StringGrid1.Cells[3,0] := '거래처';
-        StringGrid1.Cells[4,0] := '거래처 사업자번호';
-        StringGrid1.Cells[5,0] := '과세형태';
-        StringGrid1.Cells[6,0] := '공급가액';
-        StringGrid1.Cells[7,0] := '문서형태';
-        StringGrid1.Cells[8,0] := '국세청승인번호';
+        StringGrid1.Cells[0,0] := '매출/매입';
+        StringGrid1.Cells[1,0] := '작성일자';
+        StringGrid1.Cells[2,0] := '발행일자';
+        StringGrid1.Cells[3,0] := '전송일자';
+        StringGrid1.Cells[4,0] := '거래처';
+        StringGrid1.Cells[5,0] := '거래처 사업자번호';
+        StringGrid1.Cells[6,0] := '과세형태';
+        StringGrid1.Cells[7,0] := '공급가액';
+        StringGrid1.Cells[8,0] := '문서형태';
+        StringGrid1.Cells[9,0] := '국세청승인번호';
 
 
 end;
@@ -710,22 +711,23 @@ begin
         //  [링크허브]팝빌 -홈택스 전자세금계산서 API 연동매뉴얼 '4.1.1. Search' 를 참조하시기 바랍니다.
         for i := 0 to length(searchInfo.list) - 1 do
         begin
-                StringGrid1.Cells[0, i+1] := searchInfo.list[i].writeDate;
-                StringGrid1.Cells[1, i+1] := searchInfo.list[i].issueDate;
-                StringGrid1.Cells[2, i+1] := searchInfo.list[i].sendDate;
-                StringGrid1.Cells[3, i+1] := searchInfo.list[i].invoiceeCorpName;
-                StringGrid1.Cells[4, i+1] := searchInfo.list[i].invoiceeCorpNum;
-                StringGrid1.Cells[5, i+1] := searchInfo.list[i].taxType;
-                StringGrid1.Cells[6, i+1] := searchInfo.list[i].supplyCostTotal;
+                StringGrid1.Cells[0, i+1] := searchInfo.list[i].invoiceType;        
+                StringGrid1.Cells[1, i+1] := searchInfo.list[i].writeDate;
+                StringGrid1.Cells[2, i+1] := searchInfo.list[i].issueDate;
+                StringGrid1.Cells[3, i+1] := searchInfo.list[i].sendDate;
+                StringGrid1.Cells[4, i+1] := searchInfo.list[i].invoiceeCorpName;
+                StringGrid1.Cells[5, i+1] := searchInfo.list[i].invoiceeCorpNum;
+                StringGrid1.Cells[6, i+1] := searchInfo.list[i].taxType;
+                StringGrid1.Cells[7, i+1] := searchInfo.list[i].supplyCostTotal;
 
                 if searchInfo.list[i].modifyYN then
                 begin
-                        StringGrid1.Cells[7, i+1] := '수정';
+                        StringGrid1.Cells[8, i+1] := '수정';
                 end
                 else
-                        StringGrid1.Cells[7, i+1] := '일반';
-                
-                StringGrid1.Cells[8, i+1] := searchInfo.list[i].ntsconfirmNum;
+                        StringGrid1.Cells[8, i+1] := '일반';
+
+                StringGrid1.Cells[9, i+1] := searchInfo.list[i].ntsconfirmNum;
 
         end;
 
