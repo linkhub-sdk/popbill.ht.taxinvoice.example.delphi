@@ -383,7 +383,7 @@ object TfrmExample: TTfrmExample
       Top = 112
       Width = 161
       Height = 25
-      Caption = '공인인증서 등록 URL'
+      Caption = '홈택스연동 인증관리 URL'
       TabOrder = 10
       OnClick = btnGetCertificatePopUpURLClick
     end
