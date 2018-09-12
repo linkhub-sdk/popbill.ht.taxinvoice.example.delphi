@@ -381,7 +381,7 @@ begin
                         Exit;
                 end;
         end;
-        tmp := 'id | email | hp | personName | searchAllAlloyYN | tel | fax | mgrYN | regDT' + #13;
+        tmp := 'id | email | hp | personName | searchAllAlloyYN | tel | fax | mgrYN | regDT | state' + #13;
         for i := 0 to Length(InfoList) -1 do
         begin
             tmp := tmp + InfoList[i].id + ' | ';
@@ -392,7 +392,8 @@ begin
             tmp := tmp + InfoList[i].tel + ' | ';
             tmp := tmp + InfoList[i].fax + ' | ';
             tmp := tmp + BoolToStr(InfoList[i].mgrYN) + ' | ';
-            tmp := tmp + InfoList[i].regDT + #13;
+            tmp := tmp + InfoList[i].regDT + ' | ';
+            tmp := tmp + IntToStr(InfoList[i].state) + #13;
         end;
 
         ShowMessage(tmp);
