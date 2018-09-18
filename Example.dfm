@@ -1,6 +1,6 @@
 object TfrmExample: TTfrmExample
-  Left = 795
-  Top = 150
+  Left = 382
+  Top = 139
   Width = 1106
   Height = 792
   Caption = '팝빌 홈택스 전자(세금)계산서 연계 API SDK Example'
@@ -267,7 +267,7 @@ object TfrmExample: TTfrmExample
       Width = 303
       Height = 169
       Caption = '전자(세금)계산서 상세정보 조회'
-      TabOrder = 17
+      TabOrder = 15
       object Label7: TLabel
         Left = 8
         Top = 24
@@ -300,7 +300,7 @@ object TfrmExample: TTfrmExample
       Width = 177
       Height = 169
       Caption = '매출/매입 수집결과 조회'
-      TabOrder = 16
+      TabOrder = 14
     end
     object GroupBox3: TGroupBox
       Left = 16
@@ -308,7 +308,7 @@ object TfrmExample: TTfrmExample
       Width = 145
       Height = 169
       Caption = '매출/매입 내역 수집'
-      TabOrder = 15
+      TabOrder = 13
     end
     object btnGetTaxinvoice: TButton
       Left = 464
@@ -331,7 +331,7 @@ object TfrmExample: TTfrmExample
     object StringGrid1: TStringGrid
       Left = 24
       Top = 248
-      Width = 1041
+      Width = 817
       Height = 265
       BiDiMode = bdLeftToRight
       ColCount = 10
@@ -339,7 +339,7 @@ object TfrmExample: TTfrmExample
       FixedCols = 0
       RowCount = 11
       ParentBiDiMode = False
-      TabOrder = 12
+      TabOrder = 10
       OnSelectCell = StringGrid1SelectCell
       ColWidths = (
         62
@@ -359,7 +359,7 @@ object TfrmExample: TTfrmExample
       Width = 172
       Height = 21
       ImeName = 'Microsoft IME 2010'
-      TabOrder = 13
+      TabOrder = 11
     end
     object GroupBox1: TGroupBox
       Left = 664
@@ -367,7 +367,7 @@ object TfrmExample: TTfrmExample
       Width = 182
       Height = 169
       Caption = '부가기능'
-      TabOrder = 14
+      TabOrder = 12
     end
     object btnGetFlatRatePopUpURL: TButton
       Left = 672
@@ -386,24 +386,6 @@ object TfrmExample: TTfrmExample
       Caption = '정액제 서비스 상태 확인'
       TabOrder = 9
       OnClick = btnGetFlatRateStateClick
-    end
-    object btnGetCertificatePopUpURL: TButton
-      Left = 672
-      Top = 112
-      Width = 161
-      Height = 25
-      Caption = '홈택스연동 인증관리 URL'
-      TabOrder = 10
-      OnClick = btnGetCertificatePopUpURLClick
-    end
-    object btnGetCertificateExpireDate: TButton
-      Left = 672
-      Top = 144
-      Width = 161
-      Height = 25
-      Caption = '공인인증서 만료일자 확인'
-      TabOrder = 11
-      OnClick = btnGetCertificateExpireDateClick
     end
     object txtJobID: TEdit
       Left = 136
@@ -457,6 +439,77 @@ object TfrmExample: TTfrmExample
       Caption = '수집 상태 목록 확인'
       TabOrder = 3
       OnClick = btnListActiveJobClick
+    end
+    object GroupBox12: TGroupBox
+      Left = 856
+      Top = 24
+      Width = 209
+      Height = 249
+      Caption = '홈택스 인증관련 기능'
+      TabOrder = 16
+      object btnGetCertificateExpireDate: TButton
+        Left = 8
+        Top = 56
+        Width = 185
+        Height = 25
+        Caption = '공인인증서 만료일자 확인'
+        TabOrder = 0
+        OnClick = btnGetCertificateExpireDateClick
+      end
+      object btnGetCertificatePopUpURL: TButton
+        Left = 8
+        Top = 24
+        Width = 185
+        Height = 25
+        Caption = '홈택스연동 인증관리 URL'
+        TabOrder = 1
+        OnClick = btnGetCertificatePopUpURLClick
+      end
+      object btnCheckCertValidation: TButton
+        Left = 8
+        Top = 88
+        Width = 185
+        Height = 25
+        Caption = '공인인증서 로그인 테스트'
+        TabOrder = 2
+        OnClick = btnCheckCertValidationClick
+      end
+      object btnRegistDeptUser: TButton
+        Left = 8
+        Top = 120
+        Width = 185
+        Height = 25
+        Caption = '부서사용자 계정등록'
+        TabOrder = 3
+        OnClick = btnRegistDeptUserClick
+      end
+      object btnCheckDeptUser: TButton
+        Left = 8
+        Top = 152
+        Width = 185
+        Height = 25
+        Caption = '부서사용자 등록정보 확인'
+        TabOrder = 4
+        OnClick = btnCheckDeptUserClick
+      end
+      object btnCheckLoginDeptUser: TButton
+        Left = 8
+        Top = 184
+        Width = 185
+        Height = 25
+        Caption = '부서사용자 로그인 테스트'
+        TabOrder = 5
+        OnClick = btnCheckLoginDeptUserClick
+      end
+      object btnDeleteDeptUser: TButton
+        Left = 8
+        Top = 216
+        Width = 185
+        Height = 25
+        Caption = '부서사용자 등록정보 삭제'
+        TabOrder = 6
+        OnClick = btnDeleteDeptUserClick
+      end
     end
   end
 end

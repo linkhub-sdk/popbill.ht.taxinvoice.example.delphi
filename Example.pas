@@ -71,8 +71,6 @@ type
     btnGetXML: TButton;
     btnGetFlatRatePopUpURL: TButton;
     btnGetFlatRateState: TButton;
-    btnGetCertificatePopUpURL: TButton;
-    btnGetCertificateExpireDate: TButton;
     StringGrid1: TStringGrid;
     btnGetChargeInfo: TButton;
     txtntsconfirmNum: TEdit;
@@ -91,6 +89,14 @@ type
     btnGetPartnerBalance: TButton;
     btnGetPartnerURL_CHRG: TButton;
     btnGetPopUpURL: TButton;
+    GroupBox12: TGroupBox;
+    btnGetCertificateExpireDate: TButton;
+    btnGetCertificatePopUpURL: TButton;
+    btnCheckCertValidation: TButton;
+    btnRegistDeptUser: TButton;
+    btnCheckDeptUser: TButton;
+    btnCheckLoginDeptUser: TButton;
+    btnDeleteDeptUser: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnCheckIsMemberClick(Sender: TObject);
     procedure btnCheckIDClick(Sender: TObject);
@@ -120,6 +126,11 @@ type
     procedure btnGetPopbillURL_CHRGClick(Sender: TObject);
     procedure btnGetPartnerURL_CHRGClick(Sender: TObject);
     procedure btnGetPopUpURLClick(Sender: TObject);
+    procedure btnCheckCertValidationClick(Sender: TObject);
+    procedure btnRegistDeptUserClick(Sender: TObject);
+    procedure btnCheckDeptUserClick(Sender: TObject);
+    procedure btnCheckLoginDeptUserClick(Sender: TObject);
+    procedure btnDeleteDeptUserClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -1121,7 +1132,7 @@ begin
         NTSConfirmNum := txtntsconfirmNum.text;
 
         try
-                resultURL := htTaxinvoiceService.getPopUpURL(txtCorpNum.Text, NTSConfirmNum, txtUserID.text);
+                resultURL := htTaxinvoiceService.getPopUpURL(txtCorpNum.Text, NTSConfirmNum);
         except
                 on le : EPopbillException do begin
                         ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
@@ -1130,6 +1141,114 @@ begin
         end;
 
         ShowMessage('홈택스 전자세금계산서 보기 팝업 URL ' + #13 + resultURL);
+end;
+
+procedure TTfrmExample.btnCheckCertValidationClick(Sender: TObject);
+var
+        response : TResponse;
+begin
+        {**********************************************************************}
+        { 팝빌에 등록된 공인인증서의 홈택스 로그인을 테스트한다.               }
+        {**********************************************************************}
+
+        try
+                response := htTaxinvoiceService.CheckCertValidation(txtCorpNum.Text);
+        except
+                on le : EPopbillException do begin
+                        ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
+                        Exit;
+                end;
+        end;
+
+        ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
+end;
+
+procedure TTfrmExample.btnRegistDeptUserClick(Sender: TObject);
+var
+        response : TResponse;
+        deptUserID, deptUserPWD : String;
+begin
+        {**********************************************************************}
+        { 홈택스 전자세금계산서 부서사용자 계정을 등록한다.                    }
+        {**********************************************************************}
+
+        //홈택스에서 생성한 전자세금계산서 부서사용자 아이디
+        deptUserID := 'userid_test';
+
+        // 홈택스에서 생성한 전자세금계산서 부서사용자 비밀번호
+        deptUserPWD := 'userpwd_test';
+
+        try
+                response := htTaxinvoiceService.RegistDeptUser(txtCorpNum.Text, deptUserID, deptUserPWD);
+        except
+                on le : EPopbillException do begin
+                        ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
+                        Exit;
+                end;
+        end;
+
+        ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
+end;
+
+procedure TTfrmExample.btnCheckDeptUserClick(Sender: TObject);
+var
+        response : TResponse;
+begin
+        {**********************************************************************}
+        { 팝빌에 등록된 전자세금계산서 부서사용자 아이디를 확인한다.           }
+        {**********************************************************************}
+
+        try
+                response := htTaxinvoiceService.CheckDeptUser(txtCorpNum.Text);
+        except
+                on le : EPopbillException do begin
+                        ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
+                        Exit;
+                end;
+        end;
+
+        ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
+end;
+
+procedure TTfrmExample.btnCheckLoginDeptUserClick(Sender: TObject);
+var
+        response : TResponse;
+begin
+        {**********************************************************************}
+        { 팝빌에 등록된 전자세금계산서 부서사용자 계정정보를 이용하여          }
+        { 홈택스 로그인을 테스트한다.                                          }
+        {**********************************************************************}
+
+        try
+                response := htTaxinvoiceService.CheckLoginDeptUser(txtCorpNum.Text);
+        except
+                on le : EPopbillException do begin
+                        ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
+                        Exit;
+                end;
+        end;
+
+        ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
+end;
+
+procedure TTfrmExample.btnDeleteDeptUserClick(Sender: TObject);
+var
+        response : TResponse;
+begin
+        {**********************************************************************}
+        { 팝빌에 등록된 전자세금계산서 부서사용자 계정정보를 삭제한다.         }
+        {**********************************************************************}
+
+        try
+                response := htTaxinvoiceService.DeleteDeptUser(txtCorpNum.Text);
+        except
+                on le : EPopbillException do begin          
+                        ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
+                        Exit;
+                end;
+        end;
+
+        ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
 end;
 
 end.
