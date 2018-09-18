@@ -1,7 +1,7 @@
 object TfrmExample: TTfrmExample
-  Left = 448
-  Top = 118
-  Width = 1248
+  Left = 795
+  Top = 150
+  Width = 1106
   Height = 792
   Caption = '팝빌 홈택스 전자(세금)계산서 연계 API SDK Example'
   Color = clBtnFace
@@ -241,13 +241,13 @@ object TfrmExample: TTfrmExample
   object TGroupBox
     Left = 8
     Top = 216
-    Width = 1169
+    Width = 1081
     Height = 529
     Caption = '홈택스 전자세금계산서 연계 관련 API '
     TabOrder = 3
     object Label2: TLabel
       Left = 304
-      Top = 176
+      Top = 216
       Width = 265
       Height = 13
       AutoSize = False
@@ -255,7 +255,7 @@ object TfrmExample: TTfrmExample
     end
     object Label1: TLabel
       Left = 24
-      Top = 176
+      Top = 216
       Width = 114
       Height = 17
       AutoSize = False
@@ -265,7 +265,7 @@ object TfrmExample: TTfrmExample
       Left = 352
       Top = 24
       Width = 303
-      Height = 129
+      Height = 169
       Caption = '전자(세금)계산서 상세정보 조회'
       TabOrder = 17
       object Label7: TLabel
@@ -284,12 +284,21 @@ object TfrmExample: TTfrmExample
         AutoSize = False
         Caption = '('#39'수집결과 조회'#39' 후 그리드의 셀을 선택하십시오.)'
       end
+      object btnGetPopUpURL: TButton
+        Left = 112
+        Top = 136
+        Width = 172
+        Height = 25
+        Caption = '세금계산서 보기 팝업'
+        TabOrder = 0
+        OnClick = btnGetPopUpURLClick
+      end
     end
     object GroupBox5: TGroupBox
       Left = 168
       Top = 24
       Width = 177
-      Height = 129
+      Height = 169
       Caption = '매출/매입 수집결과 조회'
       TabOrder = 16
     end
@@ -297,23 +306,23 @@ object TfrmExample: TTfrmExample
       Left = 16
       Top = 24
       Width = 145
-      Height = 129
+      Height = 169
       Caption = '매출/매입 내역 수집'
       TabOrder = 15
     end
     object btnGetTaxinvoice: TButton
-      Left = 360
+      Left = 464
       Top = 96
-      Width = 124
+      Width = 172
       Height = 25
       Caption = '상세정보 조회'
       TabOrder = 6
       OnClick = btnGetTaxinvoiceClick
     end
     object btnGetXML: TButton
-      Left = 496
-      Top = 96
-      Width = 141
+      Left = 464
+      Top = 128
+      Width = 172
       Height = 25
       Caption = '상세정보 조회 - XML'
       TabOrder = 7
@@ -321,9 +330,9 @@ object TfrmExample: TTfrmExample
     end
     object StringGrid1: TStringGrid
       Left = 24
-      Top = 200
-      Width = 1025
-      Height = 313
+      Top = 248
+      Width = 1041
+      Height = 265
       BiDiMode = bdLeftToRight
       ColCount = 10
       DefaultRowHeight = 27
@@ -356,7 +365,7 @@ object TfrmExample: TTfrmExample
       Left = 664
       Top = 24
       Width = 182
-      Height = 158
+      Height = 169
       Caption = '부가기능'
       TabOrder = 14
     end
@@ -398,7 +407,7 @@ object TfrmExample: TTfrmExample
     end
     object txtJobID: TEdit
       Left = 136
-      Top = 172
+      Top = 212
       Width = 153
       Height = 21
       ImeName = 'Microsoft IME 2010'

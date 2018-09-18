@@ -3,7 +3,7 @@
 { 팝빌 홈택스 전자세금계산서 매입/매출 API Delphi SDK Example                  }
 {                                                                              }
 { - 델파이 SDK 적용방법 안내 : http://blog.linkhub.co.kr/572                   }
-{ - 업데이트 일자 : 2017-08-30                                                 }
+{ - 업데이트 일자 : 2018-09-18                                                 }
 { - 연동 기술지원 연락처 : 1600-9854 / 070-4304-2991                           }
 { - 연동 기술지원 이메일 : code@linkhub.co.kr                                  }
 {                                                                              }
@@ -90,6 +90,7 @@ type
     btnGetBalance: TButton;
     btnGetPartnerBalance: TButton;
     btnGetPartnerURL_CHRG: TButton;
+    btnGetPopUpURL: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnCheckIsMemberClick(Sender: TObject);
     procedure btnCheckIDClick(Sender: TObject);
@@ -118,6 +119,7 @@ type
     procedure btnGetPopbillURL_LOGINClick(Sender: TObject);
     procedure btnGetPopbillURL_CHRGClick(Sender: TObject);
     procedure btnGetPartnerURL_CHRGClick(Sender: TObject);
+    procedure btnGetPopUpURLClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -1036,9 +1038,9 @@ end;
 procedure TTfrmExample.StringGrid1SelectCell(Sender: TObject; ACol,
   ARow: Integer; var CanSelect: Boolean);
 begin
-        if StringGrid1.Cells[8, Arow] <> '' then
+        if StringGrid1.Cells[9, Arow] <> '' then
         begin
-                txtntsconfirmNum.Text := StringGrid1.Cells[8, Arow];
+                txtntsconfirmNum.Text := StringGrid1.Cells[9, Arow];
         end
         
 end;
@@ -1105,6 +1107,29 @@ begin
         end;
 
         ShowMessage('파트너 포인트충전 URL ' + #13 + resultURL);
+end;
+
+procedure TTfrmExample.btnGetPopUpURLClick(Sender: TObject);
+var
+  resultURL, NTSConfirmNum : String;
+begin
+        {**********************************************************************}
+        {    홈택스 전자세금계산서 보기 팝업 URL을 반환한다.                   }
+        {    URL 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.      }
+        {**********************************************************************}
+
+        NTSConfirmNum := txtntsconfirmNum.text;
+
+        try
+                resultURL := htTaxinvoiceService.getPopUpURL(txtCorpNum.Text, NTSConfirmNum, txtUserID.text);
+        except
+                on le : EPopbillException do begin
+                        ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
+                        Exit;
+                end;
+        end;
+
+        ShowMessage('홈택스 전자세금계산서 보기 팝업 URL ' + #13 + resultURL);
 end;
 
 end.
