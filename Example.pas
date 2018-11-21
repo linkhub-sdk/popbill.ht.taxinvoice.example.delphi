@@ -76,7 +76,7 @@ type
     txtntsconfirmNum: TEdit;
     GroupBox1: TGroupBox;
     GroupBox2: TGroupBox;
-    btnGetPopbillURL_LOGIN: TButton;
+    btnGetAccessURL: TButton;
     GroupBox3: TGroupBox;
     GroupBox5: TGroupBox;
     GroupBox6: TGroupBox;
@@ -84,7 +84,7 @@ type
     Label8: TLabel;
     GroupBox7: TGroupBox;
     GroupBox10: TGroupBox;
-    btnGetPopbillURL_CHRG: TButton;
+    btnGetChargeURL: TButton;
     btnGetBalance: TButton;
     btnGetPartnerBalance: TButton;
     btnGetPartnerURL_CHRG: TButton;
@@ -122,8 +122,8 @@ type
     procedure btnGetChargeInfoClick(Sender: TObject);
     procedure StringGrid1SelectCell(Sender: TObject; ACol, ARow: Integer;
       var CanSelect: Boolean);
-    procedure btnGetPopbillURL_LOGINClick(Sender: TObject);
-    procedure btnGetPopbillURL_CHRGClick(Sender: TObject);
+    procedure btnGetAccessURLClick(Sender: TObject);
+    procedure btnGetChargeURLClick(Sender: TObject);
     procedure btnGetPartnerURL_CHRGClick(Sender: TObject);
     procedure btnGetPopUpURLClick(Sender: TObject);
     procedure btnCheckCertValidationClick(Sender: TObject);
@@ -544,10 +544,10 @@ begin
         DType := 'W';
 
         // 시작일자, 날자형식(yyyyMMdd)
-        SDate := '20160901';
+        SDate := '20180928';
 
         // 종료일자, 날자형식(yyyyMMdd)
-        EDate := '20161031';
+        EDate := '201809281';
         
         try
                 jobID := htTaxinvoiceService.RequestJob(txtCorpNum.text, queryType, DType, SDate, EDate);
@@ -1056,7 +1056,7 @@ begin
         
 end;
 
-procedure TTfrmExample.btnGetPopbillURL_LOGINClick(Sender: TObject);
+procedure TTfrmExample.btnGetAccessURLClick(Sender: TObject);
 var
         resultURL : String;
 begin
@@ -1066,7 +1066,7 @@ begin
         {**********************************************************************}
 
         try
-                resultURL := htTaxinvoiceService.getPopbillURL(txtCorpNum.Text, 'LOGIN');
+                resultURL := htTaxinvoiceService.getAccessURL(txtCorpNum.Text, txtUserID.Text);
         except
                 on le : EPopbillException do begin
                         ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
@@ -1077,7 +1077,7 @@ begin
         ShowMessage('팝빌 로그인 URL' + #13 + resultURL);
 end;
 
-procedure TTfrmExample.btnGetPopbillURL_CHRGClick(Sender: TObject);
+procedure TTfrmExample.btnGetChargeURLClick(Sender: TObject);
 var
   resultURL : String;
 begin
@@ -1087,7 +1087,7 @@ begin
         {**********************************************************************}
         
         try
-                resultURL := htTaxinvoiceService.getPopbillURL(txtCorpNum.Text, 'CHRG');
+                resultURL := htTaxinvoiceService.getChargeURL(txtCorpNum.Text, txtUserID.Text);
         except
                 on le : EPopbillException do begin
                         ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
