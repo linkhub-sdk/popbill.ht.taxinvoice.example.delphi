@@ -1,6 +1,6 @@
 object TfrmExample: TTfrmExample
-  Left = 382
-  Top = 139
+  Left = 494
+  Top = 135
   Width = 1106
   Height = 792
   Caption = '팝빌 홈택스 전자(세금)계산서 연계 API SDK Example'

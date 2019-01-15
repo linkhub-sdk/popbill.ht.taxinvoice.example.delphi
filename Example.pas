@@ -3,7 +3,7 @@
 { 팝빌 홈택스 전자세금계산서 매입/매출 API Delphi SDK Example                  }
 {                                                                              }
 { - 델파이 SDK 적용방법 안내 : http://blog.linkhub.co.kr/572                   }
-{ - 업데이트 일자 : 2018-11-21                                                 }
+{ - 업데이트 일자 : 2019-01-15                                                 }
 { - 연동 기술지원 연락처 : 1600-9854 / 070-4304-2991                           }
 { - 연동 기술지원 이메일 : code@linkhub.co.kr                                  }
 {                                                                              }
@@ -11,10 +11,10 @@
 { (1) 38, 41번 라인에 선언된 링크아이디(LinkID)와 비밀키(SecretKey)를          }
 {    링크허브 가입시 메일로 발급받은 인증정보로 수정                           }
 { (2) 팝빌 개발용 사이트(test.popbill.com)에 연동회원으로 가입                 }
-{ (3) 홈택스 공인인증서 등록, 2가지 방법가능                                   }
-{     - 팝빌사이트 로그인 > [홈택스연계] > 화면왼쪽 하단탭 [환경설정] >        }
-{       [공인인증서 관리]                                                      }
-{    - 홈택스 공인인증서등록 URL (GetCertificatePopUpURL API)을 이용하여 등록  }
+{ (3) 홈택스 인증처리를 합니다. (부서사용자등록 / 공인인증서 등록              }
+{    - [팝빌로그인] > [홈택스연동] > [환경설정] > [인증 관리] 메뉴             }
+{    - 홈택스연동 인증 관리 팝업 URL(GetCertificatePopUpURL API) 반환된 URL을  }
+{      을 이용하여 홈택스 인증 처리를 합니다.                                  }
 {                                                                              }
 {******************************************************************************}
 
@@ -186,13 +186,12 @@ begin
                 response := htTaxinvoiceService.CheckIsMember(txtCorpNum.text, LinkID);
         except
                 on le : EPopbillException do begin
-                        ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
+                        ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
                         Exit;
                 end;
         end;
 
-        ShowMessage(IntToStr(response.code) + ' | ' +  response.Message);
-
+        ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
 end;
 
 procedure TTfrmExample.btnCheckIDClick(Sender: TObject);
@@ -207,13 +206,12 @@ begin
                 response := htTaxinvoiceService.CheckID(txtUserID.Text);
         except
                 on le : EPopbillException do begin
-                        ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
+                        ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
                         Exit;
                 end;
         end;
 
-        ShowMessage(IntToStr(response.code) + ' | ' +  response.Message);
-
+        ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
 
 end;
 
@@ -273,13 +271,12 @@ begin
                 response := htTaxinvoiceService.JoinMember(joinInfo);
         except
                 on le : EPopbillException do begin
-                        ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
+                        ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
                         Exit;
                 end;
         end;
 
-        ShowMessage(IntToStr(response.code) + ' | ' +  response.Message);
-
+        ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
 end;
 
 procedure TTfrmExample.btnGetBalanceClick(Sender: TObject);
@@ -296,7 +293,7 @@ begin
                 balance := htTaxinvoiceService.GetBalance(txtCorpNum.text);
         except
                 on le : EPopbillException do begin
-                        ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
+                        ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
                         Exit;
                 end;
         end;
@@ -319,7 +316,7 @@ begin
                 balance := htTaxinvoiceService.GetPartnerBalance(txtCorpNum.text);
         except
                 on le : EPopbillException do begin
-                        ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
+                        ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
                         Exit;
                 end;
         end;
@@ -337,43 +334,44 @@ begin
         { 연동회원의 담당자를 신규로 등록합니다.                               }
         {**********************************************************************}
 
-        // [필수] 담당자 아이디 (6자 이상 20자 미만)
-        joinInfo.id := 'testkorea1004_01';
-        
+        // [필수] 담당자 아이디 (6자 이상 50자 미만)
+        joinInfo.id := 'testkorea0222_01';
+
         // [필수] 비밀번호 (6자 이상 20자 미만)
         joinInfo.pwd := 'thisispassword';
 
-        // [필수] 담당자명(한글이나 영문 30자 이내)
+        // [필수] 담당자명(한글이나 영문 100자 이내)
         joinInfo.personName := '담당자성명';
 
-        // [필수] 연락처
+        // [필수] 연락처 (최대 20자)
         joinInfo.tel := '070-4304-2991';
 
-        // 휴대폰번호
+        // 휴대폰번호 (최대 20자)
         joinInfo.hp := '010-1111-2222';
 
-        // 팩스번호
+        // 팩스번호 (최대 20자)
         joinInfo.fax := '02-6442-9700';
-        
-        // [필수] 이메일
+
+        // [필수] 이메일 (최대 100자)
         joinInfo.email := 'test@test.com';
 
         // 회사조회 권한여부, true-회사조회 / false-개인조회
         joinInfo.searchAllAllowYN := false;
 
-        // 관리자 권한여부
+        // 관리자 권한여부, true-관리자 / false-사용자
         joinInfo.mgrYN := false;
 
         try
                 response := htTaxinvoiceService.RegistContact(txtCorpNum.text, joinInfo);
         except
                 on le : EPopbillException do begin
-                        ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
+                        ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
                         Exit;
                 end;
         end;
 
-        ShowMessage(IntToStr(response.code) + ' | ' +  response.Message);
+        ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
+
 end;
 
 procedure TTfrmExample.btnListContactClick(Sender: TObject);
@@ -390,11 +388,14 @@ begin
                 InfoList := htTaxinvoiceService.ListContact(txtCorpNum.text);
         except
                 on le : EPopbillException do begin
-                        ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
+                        ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
                         Exit;
                 end;
         end;
-        tmp := 'id | email | hp | personName | searchAllAlloyYN | tel | fax | mgrYN | regDT | state' + #13;
+        
+        tmp := 'id(아이디) | email(이메일) | hp(휴대폰) | personName(성명) | searchAllAllowYN(회사조회 권한) | ';
+        tmp := tmp + 'tel(연락처) | fax(팩스) | mgrYN(관리자 여부) | regDT(등록일시) | state(상태)' + #13;
+
         for i := 0 to Length(InfoList) -1 do
         begin
             tmp := tmp + InfoList[i].id + ' | ';
@@ -425,38 +426,38 @@ begin
 
         // 담당자 아이디
         contactInfo.id := 'testkorea';
-        
-        // 담당자명
+
+        // 담당자명 (최대 100자)
         contactInfo.personName := '테스트 담당자';
 
-        // 연락처
+        // 연락처 (최대 20자)
         contactInfo.tel := '070-4304-2991';
 
-        // 휴대폰번호
+        // 휴대폰번호 (최대 20자)
         contactInfo.hp := '010-4324-1111';
 
-        // 이메일 주소
+        // 이메일 주소 (최대 100자)
         contactInfo.email := 'test@test.com';
-        
-        // 팩스번호
+
+        // 팩스번호 (최대 20자)
         contactInfo.fax := '02-6442-9799';
 
         // 조회권한, true(회사조회), false(개인조회)
         contactInfo.searchAllAllowYN := true;
 
-        // 관리자권한 설정여부
-        contactInfo.mgrYN := false; 
+        // 관리자권한 설정여부, true-관리자 / false-사용자
+        contactInfo.mgrYN := false;
 
         try
                 response := htTaxinvoiceService.UpdateContact(txtCorpNum.text, contactInfo, txtUserID.text);
         except
                 on le : EPopbillException do begin
-                        ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
+                        ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
                         Exit;
                 end;
         end;
 
-        ShowMessage(IntToStr(response.code) + ' | ' +  response.Message);
+        ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
 end;
 
 procedure TTfrmExample.btnGetCorpInfoClick(Sender: TObject);
@@ -476,12 +477,12 @@ begin
                         Exit;
                 end;
         end;
-
-        tmp := 'CorpName : ' + corpInfo.CorpName + #13;
-        tmp := tmp + 'CeoName : ' + corpInfo.CeoName + #13;
-        tmp := tmp + 'BizType : ' + corpInfo.BizType + #13;
-        tmp := tmp + 'BizClass : ' + corpInfo.BizClass + #13;
-        tmp := tmp + 'Addr : ' + corpInfo.Addr + #13;
+        
+        tmp := 'CorpName (상호): ' + corpInfo.CorpName + #13;
+        tmp := tmp + 'CeoName (대표자 성명) : ' + corpInfo.CeoName + #13;
+        tmp := tmp + 'BizType (업태) : ' + corpInfo.BizType + #13;
+        tmp := tmp + 'BizClass (종목) : ' + corpInfo.BizClass + #13;
+        tmp := tmp + 'Addr (주소) : ' + corpInfo.Addr + #13;
 
         ShowMessage(tmp);
 end;
@@ -497,16 +498,16 @@ begin
 
         corpInfo := TCorpInfo.Create;
 
-        // 대표자명, 최대 30자
+        // 대표자명, 최대 100자
         corpInfo.ceoname := '대표자명';
 
-        // 상호, 최대 70자
+        // 상호, 최대 200자
         corpInfo.corpName := '상호';
 
-        // 업태, 최대 40자
+        // 업태, 최대 100자
         corpInfo.bizType := '업태';
 
-        // 종목, 최대 40자
+        // 종목, 최대 100자
         corpInfo.bizClass := '종목';
 
         // 주소, 최대 300자
@@ -516,12 +517,13 @@ begin
                 response := htTaxinvoiceService.UpdateCorpInfo(txtCorpNum.text, corpInfo);
         except
                 on le : EPopbillException do begin
-                        ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
+                        ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
                         Exit;
                 end;
         end;
 
-        ShowMessage(IntToStr(response.code) + ' | ' +  response.Message);
+        ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
+
 end;
 
 procedure TTfrmExample.btnRequestJobClick(Sender: TObject);
@@ -532,11 +534,13 @@ var
         EDate: String;
         jobID: String;
 begin
-        {**********************************************************************}
-        { 전자(세금)계산서 매출/매입 내역 수집을 요청합니다.                   }
-        {  - 수집 요청시 반환되는 작업아이디(jobID)의 유효시간은 1시간입니다.  }
-        {**********************************************************************}
-        
+        {************************************************************************}
+        { 전자(세금)계산서 매출/매입 내역 수집을 요청합니다.                     }
+        {  - 수집 요청시 반환되는 작업아이디(jobID)의 유효시간은 1시간입니다.    }
+        {  - 홈택스 연동 프로세스는 "[홈택스연동(전자세금계산서 API 연동매뉴얼 > }
+        {     1.1. 홈택스연동(전자세금계산서) API 구성" 을 참고하시기 바랍니다.  }
+        {************************************************************************}
+
         // 전자세금계산서 유형 SELL- 매출, BUY- 매입, TRUSTEE-위수탁
         queryType := SELL;
 
@@ -544,17 +548,17 @@ begin
         DType := 'W';
 
         // 시작일자, 날자형식(yyyyMMdd)
-        SDate := '20180928';
+        SDate := '20190101';
 
         // 종료일자, 날자형식(yyyyMMdd)
-        EDate := '201809281';
-        
+        EDate := '20190115';
+
         try
                 jobID := htTaxinvoiceService.RequestJob(txtCorpNum.text, queryType, DType, SDate, EDate);
 
         except
                 on le : EPopbillException do begin
-                        ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
+                        ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
                         Exit;
                 end;
         end;
@@ -569,34 +573,33 @@ var
         jobInfo : THomeTaxTIJobInfo;
         tmp : String;
 begin
-        {**********************************************************************}
-        { 수집요청에 대한 상태를 확인합니다.                                   }
-        { - 응답항목에 관한 정보는 "[API 연동매뉴얼] > 3.2.2. GetJobState      }
-        {   수집 상태 확인" 을 참조하시기 바랍니다.                            }
+        {***********************************************************************}
+        { 수집요청에 대한 상태를 확인합니다.                                    }
+        { - 응답항목에 관한 정보는 "[[홈택스연동(전자세금계산서 API 연동매뉴얼] }
+        {    > 3.1.2. GetJobState(수집 상태 확인)"을 참고 하시기 바랍니다.      }
         {**********************************************************************}
 
         try
                 jobInfo := htTaxinvoiceService.GetJobState(txtCorpNum.text, txtJobId.text);
         except
                 on le : EPopbillException do begin
-                        ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
+                        ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
                         Exit;
                 end;
         end;
 
-        tmp := 'jobID : '+ jobInfo.jobID + #13;
-        tmp := tmp + 'jobState : '+ IntToStr(jobInfo.jobState) + #13;
-        tmp := tmp + 'queryType : ' + jobInfo.queryType  + #13;
-        tmp := tmp + 'queryDateType : ' + jobInfo.queryDateType  + #13;
-        tmp := tmp + 'queryStDate : ' + jobInfo.queryStDate + #13;
-        tmp := tmp + 'queryEnDate : ' + jobInfo.queryEnDate + #13;
-        tmp := tmp + 'errorCode : ' + IntToStr(jobInfo.errorCode) + #13;
-        tmp := tmp + 'errorReason : ' + jobInfo.errorReason + #13;
-        tmp := tmp + 'jobStartDT : ' + jobInfo.jobStartDT + #13;
-        tmp := tmp + 'jobEndDT : ' + jobInfo.jobEndDT + #13;
-        tmp := tmp + 'collectCount : ' + IntToStr(jobInfo.collectCount) + #13;
-        tmp := tmp + 'regDT : ' + jobInfo.regDT + #13;
-
+        tmp := 'jobID(작업아이디) : '+ jobInfo.jobID + #13;
+        tmp := tmp + 'jobState(수집상태) : '+ IntToStr(jobInfo.jobState) + #13;
+        tmp := tmp + 'queryType(수집유형) : ' + jobInfo.queryType  + #13;
+        tmp := tmp + 'queryDateType(일자유형) : ' + jobInfo.queryDateType  + #13;
+        tmp := tmp + 'queryStDate(시작일자) : ' + jobInfo.queryStDate + #13;
+        tmp := tmp + 'queryEnDate(종료일자) : ' + jobInfo.queryEnDate + #13;
+        tmp := tmp + 'errorCode(오류코드) : ' + IntToStr(jobInfo.errorCode) + #13;
+        tmp := tmp + 'errorReason(오류메시지) : ' + jobInfo.errorReason + #13;
+        tmp := tmp + 'jobStartDT(작업 시작일시) : ' + jobInfo.jobStartDT + #13;
+        tmp := tmp + 'jobEndDT(작업 종료일시) : ' + jobInfo.jobEndDT + #13;
+        tmp := tmp + 'collectCount(수집개수) : ' + IntToStr(jobInfo.collectCount) + #13;
+        tmp := tmp + 'regDT(수집 요청일시) : ' + jobInfo.regDT + #13;
         tmp := tmp + #13;
 
         ShowMessage(tmp);
@@ -610,8 +613,8 @@ var
 begin
         {**********************************************************************}
         { 1시간 이내 수집 요청한 작업아이디 목록을 확인합니다.                 }
-        { - 응답항목에 관한 정보는 "[API 연동매뉴얼] > 3.2.3. ListActiveJob    }
-        {   수집상태 목록 확인" 을 참조하시기 바랍니다.                        }
+        { - 응답항목에 관한 정보는 "[홈택스연동(전자세금계산서 API 연동매뉴얼]>}
+        { 3.2.3. ListActiveJob 수집상태 목록 확인" 을 참조하시기 바랍니다.     }
         {**********************************************************************}
 
         try
@@ -619,12 +622,14 @@ begin
 
         except
                 on le : EPopbillException do begin
-                        ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
+                        ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
                         Exit;
                 end;
         end;
 
-        tmp := 'jobID | jobState | queryType | queryDateType | queryStDate | queryEnDate | errorCode | errorReason | jobStartDT | jobEndDT | collectCount | regDT ' + #13;
+        tmp := 'jobID(작업아이디) | jobState(수집상태) | queryType(수집유형) | queryDateType(일자유형) | ';
+        tmp := tmp + 'queryStDate(시작일자) |queryEnDate(종료일자) | errorCode(오류코드) | errorReason(오류메시지) | ';
+        tmp := tmp + 'jobStartDT(작업 시작일시) | jobEndDT(작업 종료일시) | collectCount(수집개수) | regDT(수집 요청일시) ' + #13;
 
         for i := 0 to Length(jobList) -1 do
         begin
@@ -664,6 +669,8 @@ begin
         {**********************************************************************}
         { 전자(세금)계산서 매출/매입 내역의 수집 결과를 조회합니다.            }
         {  - 수집 요청시 반환되는 작업아이디(jobID)의 유효시간은 1시간입니다.  }
+        {  - 응답항목에 관한 정보는 "[홈택스연동(전자세금계산서 API 연동매뉴얼]}
+        {    > 3.2.1. Search 수집 결과 조회" 을 참조하시기 바랍니다.           }
         {**********************************************************************}
 
         // 문서형태 배열, N - 일반 전자(세금)계산서, M - 수정(전자)세금계산서
@@ -706,7 +713,7 @@ begin
 
         except
                 on le : EPopbillException do begin
-                        ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
+                        ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
                         Exit;
                 end;
         end;
@@ -762,6 +769,8 @@ begin
         {**********************************************************************}
         { 전자(세금)계산서 매출/매입 내역의 수집 결과 요약정보를 조회합니다.   }
         {  - 수집 요청시 반환되는 작업아이디(jobID)의 유효시간은 1시간입니다.  }
+        {  - 응답항목에 관한 정보는 "[홈택스연동(전자세금계산서 API 연동매뉴얼]}
+        {     > 3.2.2. Sumary 수집 결과 요약정보 조회" 을 참조하시기 바랍니다. }
         {**********************************************************************}
 
         // 문서형태 배열, N - 일반 전자(세금)계산서, M - 수정(전자)세금계산서
@@ -795,7 +804,7 @@ begin
 
         except
                 on le : EPopbillException do begin
-                        ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
+                        ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
                         Exit;
                 end;
         end;
@@ -818,8 +827,8 @@ var
 begin
         {**********************************************************************}
         { 1건의 전자(세금)계산서 상세정보를 조회합니다.                        }
-        {  - 응답항목에 대한 정보는 "[API 연동매뉴얼] > 4.1.2. GetTaxinvoice   }
-        {    상세정보 확인 - JSON" 을 참조하시기 바랍니다.                     }
+        {  - 응답항목에 대한 정보는 "홈택스연동(전자세금계산서 API 연동매뉴얼]>}
+        {    4.1.2. GetTaxinvoice 상세정보 확인 - JSON" 을 참조하시기 바랍니다.}
         {**********************************************************************}
 
         ntsConfirmNum := txtntsconfirmNum.Text;
@@ -828,7 +837,7 @@ begin
                 taxinvoice := htTaxinvoiceService.getTaxinvoice(txtCorpNum.text,ntsConfirmNum);
         except
                 on le : EPopbillException do begin
-                        ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
+                        ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
                         Exit;
                 end;
         end;
@@ -880,7 +889,7 @@ begin
 
         tmp := tmp + '========상세항목========' + #13;
         tmp := tmp + 'serialNum | purchaseDT | itemName | spec | qty | unitCost | supplyCost | tax | remark' + #13;
-        
+
         for i:= 0 to Length(taxinvoice.detailList)-1 do
         begin
             tmp := tmp + IntToStr(taxinvoice.detailList[i].serialNum) + ' | ' +
@@ -894,7 +903,7 @@ begin
                          taxinvoice.detailList[i].remark + #13 ;
 
         end;
-        
+
         ShowMessage(tmp);
 end;
 
@@ -906,9 +915,9 @@ var
 begin
         {**********************************************************************}
         { 1건의 전자(세금)계산서 상세정보를 조회합니다. (XML형식)              }
-        {  - 응답항목에 대한 정보는 "[API 연동매뉴얼] > 4.1.2. GetTaxinvoice   }
-        {    상세정보 확인 - JSON" 을 참조하시기 바랍니다.                     }
-        {**********************************************************************}
+        {  - 응답항목에 대한 정보는 "홈택스연동(전자세금계산서 API 연동매뉴얼] }
+        {    3.2.4. GetXML(상세정보 확인 - XML)" 을 참고하시기 바랍니다.       }
+        {*************************************"********************************}
 
         ntsConfirmNum := txtntsconfirmNum.Text;
         
@@ -916,12 +925,12 @@ begin
                 response := htTaxinvoiceService.getXML(txtCorpNum.text,ntsConfirmNum);
         except
                 on le : EPopbillException do begin
-                        ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
+                        ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
                         Exit;
                 end;
         end;
 
-        tmp := 'ResultCode (응답코드) : ' + IntToStr(response.ResultCode) + #13;
+        tmp := 'ResultCode (요청에 대한 응답 상태코드) : ' + IntToStr(response.ResultCode) + #13;
         tmp := tmp + 'Message (국세청승인번호) : ' + response.Message + #13;
         tmp := tmp + 'retObject (XML문서) : ' + #13 + response.retObject;
 
@@ -934,7 +943,8 @@ var
         resultURL : String;
 begin
         {**********************************************************************}
-        { 공인인증서 등록 팝업 URL을 반환합니다.                               }
+        { 홈택스 연동 인증관리를 위한 URL을 반환 합니다.                       }
+        { - 인증방식에는 부서사용자/공인인증서 인증 방식이 있습니다.           }
         { - URL 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.       }
         {**********************************************************************}
 
@@ -942,7 +952,7 @@ begin
                 resultURL := htTaxinvoiceService.GetCertificatePopUpURL(txtCorpNum.Text);
         except
                 on le : EPopbillException do begin
-                        ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
+                        ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
                         Exit;
                 end;
         end;
@@ -963,7 +973,7 @@ begin
                 resultURL := htTaxinvoiceService.GetFlatRatePopUpURL(txtCorpNum.Text);
         except
                 on le : EPopbillException do begin
-                        ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
+                        ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
                         Exit;
                 end;
         end;
@@ -983,7 +993,7 @@ begin
                 expires := htTaxinvoiceService.GetCertificateExpireDate(txtCorpNum.Text);
         except
                 on le : EPopbillException do begin
-                        ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
+                        ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
                         Exit;
                 end;
         end;
@@ -1004,7 +1014,7 @@ begin
                 stateInfo := htTaxinvoiceService.GetFlatRateState(txtCorpNum.text);
         except
                 on le : EPopbillException do begin
-                        ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
+                        ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
                         Exit;
                 end;
         end;
@@ -1027,14 +1037,14 @@ var
         tmp : String;
 begin
         {**********************************************************************}
-        { 홈택스 전자세금계산서 연계  API 서비스 과금정보를 확인합니다.        }
+        { 홈택스 전자세금계산서  API 서비스 과금정보를 확인합니다.             }
         {**********************************************************************}
 
         try
                 chargeInfo := htTaxinvoiceService.GetChargeInfo(txtCorpNum.text);
         except
                 on le : EPopbillException do begin
-                        ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
+                        ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
                         Exit;
                 end;
         end;
@@ -1069,7 +1079,7 @@ begin
                 resultURL := htTaxinvoiceService.getAccessURL(txtCorpNum.Text, txtUserID.Text);
         except
                 on le : EPopbillException do begin
-                        ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
+                        ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
                         Exit;
                 end;
         end;
@@ -1090,7 +1100,7 @@ begin
                 resultURL := htTaxinvoiceService.getChargeURL(txtCorpNum.Text, txtUserID.Text);
         except
                 on le : EPopbillException do begin
-                        ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
+                        ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
                         Exit;
                 end;
         end;
@@ -1112,7 +1122,7 @@ begin
                 resultURL := htTaxinvoiceService.getPartnerURL(txtCorpNum.Text, 'CHRG');
         except
                 on le : EPopbillException do begin
-                        ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
+                        ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
                         Exit;
                 end;
         end;
@@ -1135,7 +1145,7 @@ begin
                 resultURL := htTaxinvoiceService.getPopUpURL(txtCorpNum.Text, NTSConfirmNum);
         except
                 on le : EPopbillException do begin
-                        ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
+                        ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
                         Exit;
                 end;
         end;
@@ -1155,7 +1165,7 @@ begin
                 response := htTaxinvoiceService.CheckCertValidation(txtCorpNum.Text);
         except
                 on le : EPopbillException do begin
-                        ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
+                        ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
                         Exit;
                 end;
         end;
@@ -1182,7 +1192,7 @@ begin
                 response := htTaxinvoiceService.RegistDeptUser(txtCorpNum.Text, deptUserID, deptUserPWD);
         except
                 on le : EPopbillException do begin
-                        ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
+                        ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
                         Exit;
                 end;
         end;
@@ -1202,7 +1212,7 @@ begin
                 response := htTaxinvoiceService.CheckDeptUser(txtCorpNum.Text);
         except
                 on le : EPopbillException do begin
-                        ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
+                        ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
                         Exit;
                 end;
         end;
@@ -1223,7 +1233,7 @@ begin
                 response := htTaxinvoiceService.CheckLoginDeptUser(txtCorpNum.Text);
         except
                 on le : EPopbillException do begin
-                        ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
+                        ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
                         Exit;
                 end;
         end;
@@ -1243,7 +1253,7 @@ begin
                 response := htTaxinvoiceService.DeleteDeptUser(txtCorpNum.Text);
         except
                 on le : EPopbillException do begin          
-                        ShowMessage(IntToStr(le.code) + ' | ' +  le.Message);
+                        ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
                         Exit;
                 end;
         end;
