@@ -3,7 +3,7 @@ object TfrmExample: TTfrmExample
   Top = 135
   Width = 1106
   Height = 792
-  Caption = '팝빌 홈택스 전자(세금)계산서 연계 API SDK Example'
+  Caption = '팝빌 홈택스 전자(세금)계산서 연동 API SDK Example'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
