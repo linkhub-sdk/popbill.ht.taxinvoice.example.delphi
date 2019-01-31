@@ -3,7 +3,7 @@
 { 팝빌 홈택스 전자세금계산서 매입/매출 API Delphi SDK Example                  }
 {                                                                              }
 { - 델파이 SDK 적용방법 안내 : http://blog.linkhub.co.kr/572                   }
-{ - 업데이트 일자 : 2019-01-15                                                 }
+{ - 업데이트 일자 : 2019-01-31                                                 }
 { - 연동 기술지원 연락처 : 1600-9854 / 070-4304-2991                           }
 { - 연동 기술지원 이메일 : code@linkhub.co.kr                                  }
 {                                                                              }
@@ -26,17 +26,17 @@ uses
 Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, TypInfo,
   Popbill, PopbillHTTaxinvoice, ExtCtrls, Grids;
-  
+
 const
         {**********************************************************************}
         { - 인증정보(링크아이디, 비밀키)는 파트너의 연동회원을 식별하는        }
         {   인증에 사용되므로 유출되지 않도록 주의하시기 바랍니다              }
         { - 상업용 전환이후에도 인증정보는 변경되지 않습니다.                  }
         {**********************************************************************}
-        
+
         // 링크아이디.
         LinkID = 'TESTER';
-        
+
         // 파트너 통신용 비밀키. 유출 주의.
         SecretKey = 'SwWxqU+0TErBXy/9TVjIPEnI0VTUMMSQZtJf3Ed8q3I=';
 
@@ -178,8 +178,8 @@ var
         response : TResponse;
 begin
         {**********************************************************************}
-        { 해당 사업자의 파트너 연동회원 가입여부를 확인합니다.                 }
-        { - LinkID는 인증정보에 설정되어 있는 링크아이디 입니다. (41번라인)    }
+        { 파트너의 연동회원으로 가입된 사업자번호인지 확인합니다.              }
+        { - LinkID는 파트너를 식별하는 인증정보(38번라인)에 설정되어 있습니다. }
         {**********************************************************************}
         
         try
@@ -190,7 +190,6 @@ begin
                         Exit;
                 end;
         end;
-
         ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
 end;
 
@@ -275,7 +274,6 @@ begin
                         Exit;
                 end;
         end;
-
         ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
 end;
 
@@ -297,9 +295,7 @@ begin
                         Exit;
                 end;
         end;
-
         ShowMessage('잔여포인트 : ' + FloatToStr(balance));
-
 end;
 
 procedure TTfrmExample.btnGetPartnerBalanceClick(Sender: TObject);
@@ -320,9 +316,7 @@ begin
                         Exit;
                 end;
         end;
-
         ShowMessage('잔여포인트 : ' + FloatToStr(balance));
-
 end;
 
 procedure TTfrmExample.btnRegistContactClick(Sender: TObject);
@@ -369,9 +363,7 @@ begin
                         Exit;
                 end;
         end;
-
         ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
-
 end;
 
 procedure TTfrmExample.btnListContactClick(Sender: TObject);
@@ -392,7 +384,7 @@ begin
                         Exit;
                 end;
         end;
-        
+
         tmp := 'id(아이디) | email(이메일) | hp(휴대폰) | personName(성명) | searchAllAllowYN(회사조회 권한) | ';
         tmp := tmp + 'tel(연락처) | fax(팩스) | mgrYN(관리자 여부) | regDT(등록일시) | state(상태)' + #13;
 
@@ -409,7 +401,6 @@ begin
             tmp := tmp + InfoList[i].regDT + ' | ';
             tmp := tmp + IntToStr(InfoList[i].state) + #13;
         end;
-
         ShowMessage(tmp);
 end;
 
@@ -456,7 +447,6 @@ begin
                         Exit;
                 end;
         end;
-
         ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
 end;
 
@@ -483,7 +473,6 @@ begin
         tmp := tmp + 'BizType (업태) : ' + corpInfo.BizType + #13;
         tmp := tmp + 'BizClass (종목) : ' + corpInfo.BizClass + #13;
         tmp := tmp + 'Addr (주소) : ' + corpInfo.Addr + #13;
-
         ShowMessage(tmp);
 end;
 
@@ -512,7 +501,7 @@ begin
 
         // 주소, 최대 300자
         corpInfo.addr := '서울특별시 강남구 영동대로 517';
-        
+
         try
                 response := htTaxinvoiceService.UpdateCorpInfo(txtCorpNum.text, corpInfo);
         except
@@ -521,9 +510,7 @@ begin
                         Exit;
                 end;
         end;
-
         ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
-
 end;
 
 procedure TTfrmExample.btnRequestJobClick(Sender: TObject);
@@ -565,7 +552,6 @@ begin
 
         ShowMessage('jobID : ' + jobID);
         txtjobID.text := jobID;
-
 end;
 
 procedure TTfrmExample.btnGetJobStateClick(Sender: TObject);
@@ -599,9 +585,7 @@ begin
         tmp := tmp + 'jobStartDT(작업 시작일시) : ' + jobInfo.jobStartDT + #13;
         tmp := tmp + 'jobEndDT(작업 종료일시) : ' + jobInfo.jobEndDT + #13;
         tmp := tmp + 'collectCount(수집개수) : ' + IntToStr(jobInfo.collectCount) + #13;
-        tmp := tmp + 'regDT(수집 요청일시) : ' + jobInfo.regDT + #13;
-        tmp := tmp + #13;
-
+        tmp := tmp + 'regDT(수집 요청일시) : ' + jobInfo.regDT + #13 + #13;
         ShowMessage(tmp);
 end;
 
@@ -614,7 +598,7 @@ begin
         {************************************************************************}
         { 1시간 이내 수집 요청한 작업아이디 목록을 확인합니다.                   }
         { - 응답항목에 관한 정보는 "[홈택스연동(전자세금계산서) API 연동매뉴얼]> }
-        { 3.2.3. ListActiveJob 수집상태 목록 확인" 을 참조하시기 바랍니다.       }
+        { 3.1.3. ListActiveJob 수집상태 목록 확인" 을 참조하시기 바랍니다.       }
         {************************************************************************}
 
         try
@@ -688,7 +672,7 @@ begin
         SetLength(purposeType, 3);
         purposeType[0] := 'R';
         purposeType[1] := 'C';
-        purposeType[2] := 'N';  
+        purposeType[2] := 'N';
 
         // 종사업업자번호 사업자 유형, 공백-전체조회, S-공급자, B-공급받는자, T-수탁자
         TaxRegIDType := '';
@@ -699,7 +683,7 @@ begin
         //종사업장번호 유무,  공백 - 전체조회, 0-종사업장번호 없음, 1-종사업장번호 있음
         TaxRegIDYN := '';
 
-        // 페이지번호 
+        // 페이지번호
         Page := 1;
 
         // 페이지당 검색개수
@@ -728,11 +712,10 @@ begin
 
         // 전자(세금)계산서 정보 출력
         //  API호출시 반환되는 추가적인 전자(세금)계산서 항목은
-
-        //  [링크허브]팝빌 -홈택스 전자세금계산서 API 연동매뉴얼 '4.1.1. Search' 를 참조하시기 바랍니다.
+        //  [팝빌] 홈택스 전자세금계산서 API 연동매뉴얼 '4.1.1. Search(수집 결과 조회)' 를 참조하시기 바랍니다.
         for i := 0 to length(searchInfo.list) - 1 do
         begin
-                StringGrid1.Cells[0, i+1] := searchInfo.list[i].invoiceType;        
+                StringGrid1.Cells[0, i+1] := searchInfo.list[i].invoiceType;
                 StringGrid1.Cells[1, i+1] := searchInfo.list[i].writeDate;
                 StringGrid1.Cells[2, i+1] := searchInfo.list[i].issueDate;
                 StringGrid1.Cells[3, i+1] := searchInfo.list[i].sendDate;
@@ -749,9 +732,7 @@ begin
                         StringGrid1.Cells[8, i+1] := '일반';
 
                 StringGrid1.Cells[9, i+1] := searchInfo.list[i].ntsconfirmNum;
-
         end;
-
         ShowMessage(tmp);
 end;
 
@@ -770,21 +751,21 @@ begin
         { 전자(세금)계산서 매출/매입 내역의 수집 결과 요약정보를 조회합니다.     }
         {  - 수집 요청시 반환되는 작업아이디(jobID)의 유효시간은 1시간입니다.    }
         {  - 응답항목에 관한 정보는 "[홈택스연동(전자세금계산서) API 연동매뉴얼] }
-        {     > 3.2.2. Sumary 수집 결과 요약정보 조회" 을 참조하시기 바랍니다.   }
+        {     > 3.2.2. Summary 수집 결과 요약정보 조회" 을 참조하시기 바랍니다.  }
         {************************************************************************}
 
-        // 문서형태 배열, N - 일반 전자(세금)계산서, M - 수정(전자)세금계산서
+        // 문서형태 배열, N-일반세금계산서, M-수정세금계산서
         SetLength(docType, 2);
         docType[0] := 'N';
         docType[1] := 'M';
 
-        // 과세형태 배열, T - 과세, N - 면세, Z - 영세
+        // 과세형태 배열, T-과세, N-면세, Z-영세
         SetLength(taxType, 3);
         taxType[0] := 'T';
         taxType[1] := 'Z';
         taxType[2] := 'N';
 
-        // 영수/청구 배열, R - 영수, C - 청구, N - 없음
+        // 영수/청구 배열, R-영수, C-청구, N-없음
         SetLength(purposeType, 3);
         purposeType[0] := 'R';
         purposeType[1] := 'C';
@@ -813,9 +794,8 @@ begin
         tmp := tmp + 'supplyCostTotal (공급가액 합계) : ' + IntToStr(summaryInfo.supplyCostTotal) + #13;
         tmp := tmp + 'taxTotal (세액 합계) : ' + IntToStr(summaryInfo.taxTotal) + #13;
         tmp := tmp + 'amountTotal (합계 금액) : ' + IntToStr(summaryInfo.amountTotal) + #13;
-        
-        ShowMessage(tmp);
 
+        ShowMessage(tmp);
 end;
 
 procedure TTfrmExample.btnGetTaxinvoiceClick(Sender: TObject);
@@ -832,7 +812,7 @@ begin
         {**********************************************************************}
 
         ntsConfirmNum := txtntsconfirmNum.Text;
-        
+
         try
                 taxinvoice := htTaxinvoiceService.getTaxinvoice(txtCorpNum.text,ntsConfirmNum);
         except
@@ -888,7 +868,8 @@ begin
         tmp := tmp + 'invoiceeEmail1 (공급받는자 이메일) : ' + taxinvoice.invoiceeEmail1 +#13 +#13;
 
         tmp := tmp + '========상세항목========' + #13;
-        tmp := tmp + 'serialNum | purchaseDT | itemName | spec | qty | unitCost | supplyCost | tax | remark' + #13;
+        tmp := tmp + 'serialNum(일련번호) | purchaseDT(거래일자) | itemName(품명) | spec(규격) | qty(수량) |';
+        tmp := tmp + 'unitCost(단가) | supplyCost(공급가액) | tax(세액) | remark(비고)' + #13;
 
         for i:= 0 to Length(taxinvoice.detailList)-1 do
         begin
@@ -901,9 +882,7 @@ begin
                          taxinvoice.detailList[i].supplyCost + ' | ' +
                          taxinvoice.detailList[i].tax + ' | ' +
                          taxinvoice.detailList[i].remark + #13 ;
-
         end;
-
         ShowMessage(tmp);
 end;
 
@@ -920,7 +899,7 @@ begin
         {*************************************"********************************}
 
         ntsConfirmNum := txtntsconfirmNum.Text;
-        
+
         try
                 response := htTaxinvoiceService.getXML(txtCorpNum.text,ntsConfirmNum);
         except
@@ -956,7 +935,6 @@ begin
                         Exit;
                 end;
         end;
-
         ShowMessage('ResultURL is ' + #13 + resultURL);
 end;
 
@@ -977,7 +955,6 @@ begin
                         Exit;
                 end;
         end;
-
         ShowMessage('ResultURL is ' + resultURL);
 end;
 
@@ -997,7 +974,6 @@ begin
                         Exit;
                 end;
         end;
-
         ShowMessage('ExpireDate is : ' + expires);
 end;
 
@@ -1037,7 +1013,7 @@ var
         tmp : String;
 begin
         {**********************************************************************}
-        { 홈택스 전자세금계산서  API 서비스 과금정보를 확인합니다.             }
+        { 홈택스 전자세금계산서 API 서비스 과금정보를 확인합니다.              }
         {**********************************************************************}
 
         try
@@ -1052,7 +1028,6 @@ begin
         tmp := 'unitCost (단가) : ' + chargeInfo.unitCost + #13;
         tmp := tmp + 'chargeMethod (과금유형) : ' + chargeInfo.chargeMethod + #13;
         tmp := tmp + 'rateSystem (과금제도) : ' + chargeInfo.rateSystem + #13;
-
         ShowMessage(tmp);
 end;
 
@@ -1083,7 +1058,6 @@ begin
                         Exit;
                 end;
         end;
-
         ShowMessage('팝빌 로그인 URL' + #13 + resultURL);
 end;
 
@@ -1095,7 +1069,7 @@ begin
         {    연동회원 포인트 충전 URL을 반환합니다.                            }
         {    URL 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.      }
         {**********************************************************************}
-        
+
         try
                 resultURL := htTaxinvoiceService.getChargeURL(txtCorpNum.Text, txtUserID.Text);
         except
@@ -1104,7 +1078,6 @@ begin
                         Exit;
                 end;
         end;
-
         ShowMessage('포인트충전 URL ' + #13 + resultURL);
 end;
 
@@ -1126,7 +1099,6 @@ begin
                         Exit;
                 end;
         end;
-
         ShowMessage('파트너 포인트충전 URL ' + #13 + resultURL);
 end;
 
@@ -1149,7 +1121,6 @@ begin
                         Exit;
                 end;
         end;
-
         ShowMessage('홈택스 전자세금계산서 보기 팝업 URL ' + #13 + resultURL);
 end;
 
@@ -1169,7 +1140,6 @@ begin
                         Exit;
                 end;
         end;
-
         ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
 end;
 
@@ -1196,7 +1166,6 @@ begin
                         Exit;
                 end;
         end;
-
         ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
 end;
 
@@ -1216,7 +1185,6 @@ begin
                         Exit;
                 end;
         end;
-
         ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
 end;
 
@@ -1237,7 +1205,6 @@ begin
                         Exit;
                 end;
         end;
-
         ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
 end;
 
@@ -1252,13 +1219,13 @@ begin
         try
                 response := htTaxinvoiceService.DeleteDeptUser(txtCorpNum.Text);
         except
-                on le : EPopbillException do begin          
+                on le : EPopbillException do begin
                         ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
                         Exit;
                 end;
         end;
-
         ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
 end;
+
 
 end.
