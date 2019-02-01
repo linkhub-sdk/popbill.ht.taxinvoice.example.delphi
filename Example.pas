@@ -151,28 +151,65 @@ begin
 
         //연동환경 설정값, true(개발용), false(상업용)
         htTaxinvoiceService.IsTest := true;
-        
-        //Exception 처리 설정값. 미기재시 true(기본값) 
+
+        //Exception 처리 설정값. 미기재시 true(기본값)
         htTaxinvoiceService.IsThrowException := true;
 
-        StringGrid1.Cells[0,0] := '매출/매입';
-        StringGrid1.Cells[1,0] := '작성일자';
-        StringGrid1.Cells[2,0] := '발행일자';
-        StringGrid1.Cells[3,0] := '전송일자';
-        StringGrid1.Cells[4,0] := '거래처';
-        StringGrid1.Cells[5,0] := '거래처 사업자번호';
-        StringGrid1.Cells[6,0] := '과세형태';
-        StringGrid1.Cells[7,0] := '공급가액';
-        StringGrid1.Cells[8,0] := '문서형태';
-        StringGrid1.Cells[9,0] := '국세청승인번호';
-
-
+        StringGrid1.Cells[0,0] := 'ntsconfirmNum';
+        StringGrid1.Cells[1,0] := 'writeDate';
+        StringGrid1.Cells[2,0] := 'issueDate';
+        StringGrid1.Cells[3,0] := 'sendDate';
+        StringGrid1.Cells[4,0] := 'taxType';
+        StringGrid1.Cells[5,0] := 'purposeType';
+        StringGrid1.Cells[6,0] := 'supplyCostTotal';
+        StringGrid1.Cells[7,0] := 'taxTotal';
+        StringGrid1.Cells[8,0] := 'totalAmount';
+        StringGrid1.Cells[9,0] := 'remark1';
+        StringGrid1.Cells[10,0] := 'invoiceType';
+        StringGrid1.Cells[11,0] := 'modifyYN';
+        StringGrid1.Cells[12,0] := 'orgNTSConfirmNum';
+        StringGrid1.Cells[13,0] := 'purchaseDate';
+        StringGrid1.Cells[14,0] := 'itemName';
+        StringGrid1.Cells[15,0] := 'spec';
+        StringGrid1.Cells[16,0] := 'qty';
+        StringGrid1.Cells[17,0] := 'unitCost';
+        StringGrid1.Cells[18,0] := 'supplyCost';
+        StringGrid1.Cells[19,0] := 'tax';
+        StringGrid1.Cells[20,0] := 'remark';
+        StringGrid1.Cells[21,0] := 'invoicerCorpNum';
+        StringGrid1.Cells[22,0] := 'invoicerTaxRegID';
+        StringGrid1.Cells[23,0] := 'invoicerCorpName';
+        StringGrid1.Cells[24,0] := 'invoicerCEOName';
+        StringGrid1.Cells[25,0] := 'invoicerEmail';
+        StringGrid1.Cells[26,0] := 'invoiceeCorpNum';
+        StringGrid1.Cells[27,0] := 'invoiceeType';
+        StringGrid1.Cells[28,0] := 'invoiceeTaxRegID';
+        StringGrid1.Cells[29,0] := 'invoiceeCorpName';
+        StringGrid1.Cells[30,0] := 'invoiceeCEOName';
+        StringGrid1.Cells[31,0] := 'invoiceeEmail1';
+        StringGrid1.Cells[32,0] := 'invoiceeEmail2';
+        StringGrid1.Cells[33,0] := 'trusteeCorpNum';
+        StringGrid1.Cells[34,0] := 'trusteeTaxRegID';
+        StringGrid1.Cells[35,0] := 'trusteeCorpName';
+        StringGrid1.Cells[36,0] := 'trusteeCEOName';
+        StringGrid1.Cells[37,0] := 'trusteeEmail';
 end;
+
 Function BoolToStr(b:Boolean):String;
-begin 
-    if b = true then BoolToStr:='True'; 
-    if b = false then BoolToStr:='False'; 
+begin
+    if b = true then BoolToStr:='True';
+    if b = false then BoolToStr:='False';
 end;
+
+procedure TTfrmExample.StringGrid1SelectCell(Sender: TObject; ACol,
+  ARow: Integer; var CanSelect: Boolean);
+begin
+        if StringGrid1.Cells[0, Arow] <> '' then
+        begin
+                txtntsconfirmNum.Text := StringGrid1.Cells[0, Arow];
+        end
+end;
+
 procedure TTfrmExample.btnCheckIsMemberClick(Sender: TObject);
 var
         response : TResponse;
@@ -200,7 +237,7 @@ begin
         {**********************************************************************}
         { 회원가입(JoinMember API)을 호출하기 전 아이디 중복을 확인합니다.     }
         {**********************************************************************}
-        
+
         try
                 response := htTaxinvoiceService.CheckID(txtUserID.Text);
         except
@@ -715,23 +752,51 @@ begin
         //  [팝빌] 홈택스 전자세금계산서 API 연동매뉴얼 '4.1.1. Search(수집 결과 조회)' 를 참조하시기 바랍니다.
         for i := 0 to length(searchInfo.list) - 1 do
         begin
-                StringGrid1.Cells[0, i+1] := searchInfo.list[i].invoiceType;
-                StringGrid1.Cells[1, i+1] := searchInfo.list[i].writeDate;
-                StringGrid1.Cells[2, i+1] := searchInfo.list[i].issueDate;
-                StringGrid1.Cells[3, i+1] := searchInfo.list[i].sendDate;
-                StringGrid1.Cells[4, i+1] := searchInfo.list[i].invoiceeCorpName;
-                StringGrid1.Cells[5, i+1] := searchInfo.list[i].invoiceeCorpNum;
-                StringGrid1.Cells[6, i+1] := searchInfo.list[i].taxType;
-                StringGrid1.Cells[7, i+1] := searchInfo.list[i].supplyCostTotal;
+                StringGrid1.Cells[0, i+1] := searchInfo.list[i].ntsconfirmNum;       // 국세청승인번호
+                StringGrid1.Cells[1, i+1] := searchInfo.list[i].writeDate;           // 작성일자
+                StringGrid1.Cells[2, i+1] := searchInfo.list[i].issueDate;           // 발행일자
+                StringGrid1.Cells[3, i+1] := searchInfo.list[i].sendDate;            // 전송일자
+                StringGrid1.Cells[4, i+1] := searchInfo.list[i].taxType;             // 과세형태
+                StringGrid1.Cells[5, i+1] := searchInfo.list[i].purposeType;         // 영수/청구
+                StringGrid1.Cells[6, i+1] := searchInfo.list[i].supplyCostTotal;     // 공급가액 합계
+                StringGrid1.Cells[7, i+1] := searchInfo.list[i].taxTotal;            // 세액 합계
+                StringGrid1.Cells[8, i+1] := searchInfo.list[i].totalAmount;         // 합계금액
+                StringGrid1.Cells[9, i+1] := searchInfo.list[i].remark1;             // 비고
+                StringGrid1.Cells[10, i+1] := searchInfo.list[i].invoiceType;        // 매입/매출
 
-                if searchInfo.list[i].modifyYN then
+                if searchInfo.list[i].modifyYN then                                  // 수정 전자세금계산서 여부
                 begin
-                        StringGrid1.Cells[8, i+1] := '수정';
+                        StringGrid1.Cells[11, i+1] := '수정';
                 end
                 else
-                        StringGrid1.Cells[8, i+1] := '일반';
+                        StringGrid1.Cells[11, i+1] := '일반';
 
-                StringGrid1.Cells[9, i+1] := searchInfo.list[i].ntsconfirmNum;
+                StringGrid1.Cells[12, i+1] := searchInfo.list[i].orgNTSConfirmNum;   // 원본 전자세금계산서 국세청 승인번호
+                StringGrid1.Cells[13, i+1] := searchInfo.list[i].purchaseDate;       // 거래일자
+                StringGrid1.Cells[14, i+1] := searchInfo.list[i].itemName;           // 품명
+                StringGrid1.Cells[15, i+1] := searchInfo.list[i].spec;               // 규격
+                StringGrid1.Cells[16, i+1] := searchInfo.list[i].qty;                // 수량
+                StringGrid1.Cells[17, i+1] := searchInfo.list[i].unitCost;           // 단가
+                StringGrid1.Cells[18, i+1] := searchInfo.list[i].supplyCost;         // 공급가액
+                StringGrid1.Cells[19, i+1] := searchInfo.list[i].tax;                // 세액
+                StringGrid1.Cells[20, i+1] := searchInfo.list[i].remark;             // 비고
+                StringGrid1.Cells[21, i+1] := searchInfo.list[i].invoicerCorpNum;    // 공급자 사업자번호
+                StringGrid1.Cells[22, i+1] := searchInfo.list[i].invoicerTaxRegID;   // 공급자 종사업장번호
+                StringGrid1.Cells[23, i+1] := searchInfo.list[i].invoicerCorpName;   // 공급자 상호
+                StringGrid1.Cells[24, i+1] := searchInfo.list[i].invoicerCEOName;    // 공급자 대표자 성명
+                StringGrid1.Cells[25, i+1] := searchInfo.list[i].invoicerEmail;      // 공급자 담당자 이메일
+                StringGrid1.Cells[26, i+1] := searchInfo.list[i].invoiceeCorpNum;    // 공급받는자 사업자번호
+                StringGrid1.Cells[27, i+1] := searchInfo.list[i].invoiceeType;       // 공급받는자 구분
+                StringGrid1.Cells[28, i+1] := searchInfo.list[i].invoiceeTaxRegID;   // 공급받는자 종사업장번호
+                StringGrid1.Cells[29, i+1] := searchInfo.list[i].invoiceeCorpName;   // 공급받는자 상호
+                StringGrid1.Cells[30, i+1] := searchInfo.list[i].invoiceeCEOName;    // 공급받는자 대표자성명
+                StringGrid1.Cells[31, i+1] := searchInfo.list[i].invoiceeEmail1;     // 공급받는자 담당자 이메일
+                StringGrid1.Cells[32, i+1] := searchInfo.list[i].invoiceeEmail2;     // 공급받는자 ASP 연계사업자 메일
+                StringGrid1.Cells[33, i+1] := searchInfo.list[i].trusteeCorpNum;     // 수탁자 사업자번호
+                StringGrid1.Cells[34, i+1] := searchInfo.list[i].trusteeTaxRegID;    // 수탁자 종사업장번호
+                StringGrid1.Cells[35, i+1] := searchInfo.list[i].trusteeCorpName;    // 수탁자 상호
+                StringGrid1.Cells[36, i+1] := searchInfo.list[i].trusteeCEOName;     // 수탁자 대표자 성명
+                StringGrid1.Cells[37, i+1] := searchInfo.list[i].trusteeEmail;       // 수탁자 담당자 이메일
         end;
         ShowMessage(tmp);
 end;
@@ -1031,16 +1096,6 @@ begin
         ShowMessage(tmp);
 end;
 
-procedure TTfrmExample.StringGrid1SelectCell(Sender: TObject; ACol,
-  ARow: Integer; var CanSelect: Boolean);
-begin
-        if StringGrid1.Cells[9, Arow] <> '' then
-        begin
-                txtntsconfirmNum.Text := StringGrid1.Cells[9, Arow];
-        end
-        
-end;
-
 procedure TTfrmExample.btnGetAccessURLClick(Sender: TObject);
 var
         resultURL : String;
@@ -1226,6 +1281,8 @@ begin
         end;
         ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
 end;
+
+
 
 
 end.

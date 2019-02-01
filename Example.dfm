@@ -1,6 +1,6 @@
 object TfrmExample: TTfrmExample
-  Left = 494
-  Top = 135
+  Left = 289
+  Top = 134
   Width = 1106
   Height = 792
   Caption = '팝빌 홈택스 전자(세금)계산서 연동 API SDK Example'
@@ -334,7 +334,7 @@ object TfrmExample: TTfrmExample
       Width = 817
       Height = 265
       BiDiMode = bdLeftToRight
-      ColCount = 10
+      ColCount = 38
       DefaultRowHeight = 27
       FixedCols = 0
       RowCount = 11
@@ -342,16 +342,44 @@ object TfrmExample: TTfrmExample
       TabOrder = 10
       OnSelectCell = StringGrid1SelectCell
       ColWidths = (
-        62
-        61
+        120
+        81
         64
         68
-        138
-        128
-        76
-        87
         72
-        187)
+        72
+        76
+        69
+        72
+        72
+        64
+        64
+        64
+        64
+        64
+        64
+        64
+        64
+        64
+        64
+        64
+        64
+        64
+        64
+        64
+        64
+        64
+        64
+        64
+        64
+        64
+        64
+        64
+        64
+        64
+        64
+        64
+        64)
     end
     object txtntsconfirmNum: TEdit
       Left = 464
