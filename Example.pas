@@ -252,11 +252,6 @@ begin
         {    아이디 중복확인은 btnCheckIDClick 프로시져를 참조하시기 바랍니다. }
         {**********************************************************************}
 
-        {**********************************************************************}
-        {    파트너의 연동회원으로 회원가입을 요청합니다.                      }
-        {    아이디 중복확인은 btnCheckIDClick 프로시져를 참조하시기 바랍니다. }
-        {**********************************************************************}
-
         // 링크아이디
         joinInfo.LinkID := LinkID;
 
@@ -340,7 +335,7 @@ begin
         { 연동과금인 경우 연동회원 잔여포인트 확인(GetBalance API)를           }
         { 이용하시기 바랍니다                                                  }
         {**********************************************************************}
-        
+
         try
                 balance := htTaxinvoiceService.GetPartnerBalance(txtCorpNum.text);
         except
@@ -680,7 +675,7 @@ var
         order : String;
         searchInfo : THomeTaxTISearchList;
         tmp : string;
-        i : Integer; 
+        i : Integer;
 begin
         {**********************************************************************}
         { 전자(세금)계산서 매출/매입 내역의 수집 결과를 조회합니다.            }
@@ -859,7 +854,7 @@ begin
         {**********************************************************************}
 
         ntsConfirmNum := txtntsconfirmNum.Text;
-        
+
         try
                 taxinvoice := htTaxinvoiceService.getTaxinvoice(txtCorpNum.text,ntsConfirmNum);
         except
@@ -917,7 +912,7 @@ begin
         tmp := tmp + '========상세항목========' + #13;
         tmp := tmp + 'serialNum(일련번호) | purchaseDT(거래일자) | itemName(품명) | spec(규격) | qty(수량) |';
         tmp := tmp + 'unitCost(단가) | supplyCost(공급가액) | tax(세액) | remark(비고)' + #13;
-        
+
         for i:= 0 to Length(taxinvoice.detailList)-1 do
         begin
             tmp := tmp + IntToStr(taxinvoice.detailList[i].serialNum) + ' | ' +

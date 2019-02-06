@@ -227,7 +227,7 @@ object TfrmExample: TTfrmExample
     Height = 21
     ImeName = 'Microsoft IME 2010'
     TabOrder = 1
-    Text = '6798700433'
+    Text = '1234567890'
   end
   object txtUserID: TEdit
     Left = 384
@@ -236,7 +236,7 @@ object TfrmExample: TTfrmExample
     Height = 21
     ImeName = 'Microsoft IME 2010'
     TabOrder = 2
-    Text = 'testkorea_linkhub'
+    Text = 'testkorea'
   end
   object TGroupBox
     Left = 8
