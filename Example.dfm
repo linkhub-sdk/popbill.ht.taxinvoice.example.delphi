@@ -227,7 +227,7 @@ object TfrmExample: TTfrmExample
     Height = 21
     ImeName = 'Microsoft IME 2010'
     TabOrder = 1
-    Text = '1234567890'
+    Text = '6798700433'
   end
   object txtUserID: TEdit
     Left = 384
@@ -236,7 +236,7 @@ object TfrmExample: TTfrmExample
     Height = 21
     ImeName = 'Microsoft IME 2010'
     TabOrder = 2
-    Text = 'testkorea'
+    Text = 'testkorea_linkhub'
   end
   object TGroupBox
     Left = 8
@@ -334,7 +334,7 @@ object TfrmExample: TTfrmExample
       Width = 817
       Height = 265
       BiDiMode = bdLeftToRight
-      ColCount = 38
+      ColCount = 31
       DefaultRowHeight = 27
       FixedCols = 0
       RowCount = 11
@@ -352,13 +352,6 @@ object TfrmExample: TTfrmExample
         69
         72
         72
-        64
-        64
-        64
-        64
-        64
-        64
-        64
         64
         64
         64
