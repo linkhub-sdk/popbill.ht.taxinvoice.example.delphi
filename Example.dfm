@@ -334,7 +334,7 @@ object TfrmExample: TTfrmExample
       Width = 817
       Height = 265
       BiDiMode = bdLeftToRight
-      ColCount = 31
+      ColCount = 38
       DefaultRowHeight = 27
       FixedCols = 0
       RowCount = 11
@@ -352,6 +352,13 @@ object TfrmExample: TTfrmExample
         69
         72
         72
+        64
+        64
+        64
+        64
+        64
+        64
+        64
         64
         64
         64
