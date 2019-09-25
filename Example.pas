@@ -156,7 +156,7 @@ begin
         htTaxinvoiceService.IsTest := true;
 
         //Exception 처리 설정값. 미기재시 true(기본값)
-        htTaxinvoiceService.IsThrowException := false;
+        htTaxinvoiceService.IsThrowException := true;
 
         //인증토큰 IP제한기능 사용여부, true(권장)
         htTaxinvoiceService.IPRestrictOnOff := true;
