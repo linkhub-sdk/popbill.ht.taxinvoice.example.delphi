@@ -715,6 +715,8 @@ var
         searchInfo : THomeTaxTISearchList;
         tmp : string;
         i : Integer;
+        searchString : string;
+
 begin
         {**********************************************************************}
         { 전자(세금)계산서 매출/매입 내역의 수집 결과를 조회합니다.            }
@@ -755,9 +757,12 @@ begin
 
         // 정렬방향, D-내림차순, A-오름차순
         Order := 'D';
+        
+        // 조회 검색어, 거래처 사업자번호 또는 거래처명 like 검색
+        SearchString := '';
 
         try
-                searchInfo := htTaxinvoiceService.Search(txtCorpNum.text, txtJobId.text,DocType,TaxType, PurposeType, TaxRegIDType, TaxRegID, TaxRegIDYN, Page, PerPage, Order);
+                searchInfo := htTaxinvoiceService.Search(txtCorpNum.text, txtJobId.text,DocType,TaxType, PurposeType, TaxRegIDType, TaxRegID, TaxRegIDYN, Page, PerPage, Order, txtUserID.text, SearchString);
 
         except
                 on le : EPopbillException do begin
@@ -846,6 +851,7 @@ var
         taxRegIDYN : string;
         summaryInfo : TTaxinvoiceSummary;
         tmp : string;
+        searchString : string;
 begin
         {************************************************************************}
         { 전자(세금)계산서 매출/매입 내역의 수집 결과 요약정보를 조회합니다.     }
@@ -880,8 +886,11 @@ begin
         //종사업장번호 유무, 공백 - 전체조회, 0-종사업장번호 없음, 1-종사업장번호 있음
         TaxRegIDYN := '';
 
+        // 조회 검색어, 거래처 사업자번호 또는 거래처명 like 검색
+        SearchString := '';
+                
         try
-                summaryInfo := htTaxinvoiceService.Summary(txtCorpNum.text, txtJobId.text,DocType,TaxType, PurposeType, TaxRegIDType, TaxRegID, TaxRegIDYN);
+                summaryInfo := htTaxinvoiceService.Summary(txtCorpNum.text, txtJobId.text,DocType,TaxType, PurposeType, TaxRegIDType, TaxRegID, TaxRegIDYN, txtUserID.text, SearchString);
 
         except
                 on le : EPopbillException do begin
