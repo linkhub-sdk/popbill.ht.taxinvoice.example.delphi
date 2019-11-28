@@ -285,13 +285,22 @@ object TfrmExample: TTfrmExample
         Caption = '('#39'수집결과 조회'#39' 후 그리드의 셀을 선택하십시오.)'
       end
       object btnGetPopUpURL: TButton
-        Left = 112
-        Top = 136
-        Width = 172
+        Left = 152
+        Top = 72
+        Width = 140
         Height = 25
         Caption = '세금계산서 보기 팝업'
         TabOrder = 0
         OnClick = btnGetPopUpURLClick
+      end
+      object btnGetPrintURL: TButton
+        Left = 152
+        Top = 104
+        Width = 140
+        Height = 25
+        Caption = '세금계산서 인쇄 팝업'
+        TabOrder = 1
+        OnClick = btnGetPrintURLClick
       end
     end
     object GroupBox5: TGroupBox
@@ -311,18 +320,18 @@ object TfrmExample: TTfrmExample
       TabOrder = 13
     end
     object btnGetTaxinvoice: TButton
-      Left = 464
+      Left = 360
       Top = 96
-      Width = 172
+      Width = 137
       Height = 25
       Caption = '상세정보 조회'
       TabOrder = 6
       OnClick = btnGetTaxinvoiceClick
     end
     object btnGetXML: TButton
-      Left = 464
+      Left = 360
       Top = 128
-      Width = 172
+      Width = 137
       Height = 25
       Caption = '상세정보 조회 - XML'
       TabOrder = 7

@@ -2,8 +2,8 @@
 {                                                                              }
 { 팝빌 홈택스 전자세금계산서 매입/매출 API Delphi SDK Example                  }
 {                                                                              }
-{ - 델파이 SDK 적용방법 안내 : http://blog.linkhub.co.kr/572                   }
-{ - 업데이트 일자 : 2019-09-25                                                 }
+{ - 델파이 SDK 적용방법 안내 : https://docs.popbill.com/httaxinvoice/tutorial/delphi }
+{ - 업데이트 일자 : 2019-11-28                                                 }
 { - 연동 기술지원 연락처 : 1600-9854 / 070-4304-2991                           }
 { - 연동 기술지원 이메일 : code@linkhub.co.kr                                  }
 {                                                                              }
@@ -100,6 +100,7 @@ type
     btnCheckDeptUser: TButton;
     btnCheckLoginDeptUser: TButton;
     btnDeleteDeptUser: TButton;
+    btnGetPrintURL: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnCheckIsMemberClick(Sender: TObject);
     procedure btnCheckIDClick(Sender: TObject);
@@ -134,6 +135,7 @@ type
     procedure btnCheckDeptUserClick(Sender: TObject);
     procedure btnCheckLoginDeptUserClick(Sender: TObject);
     procedure btnDeleteDeptUserClick(Sender: TObject);
+    procedure btnGetPrintURLClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -1374,6 +1376,29 @@ begin
                 end;
         end;
         ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
+end;
+
+procedure TTfrmExample.btnGetPrintURLClick(Sender: TObject);
+var
+  resultURL, NTSConfirmNum : String;
+begin
+        {**********************************************************************}
+        {    홈택스 전자세금계산서 인쇄 팝업 URL을 반환한다.                   }
+        {    URL 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.      }
+        {**********************************************************************}
+
+        NTSConfirmNum := txtntsconfirmNum.text;
+
+        try
+                resultURL := htTaxinvoiceService.getPrintURL(txtCorpNum.Text, NTSConfirmNum);
+                txtUserID.text := resultURL;
+        except
+                on le : EPopbillException do begin
+                        ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
+                        Exit;
+                end;
+        end;
+        ShowMessage('홈택스 전자세금계산서 인쇄 팝업 URL ' + #13 + resultURL);
 end;
 
 end.
