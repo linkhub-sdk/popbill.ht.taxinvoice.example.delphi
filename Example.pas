@@ -575,13 +575,13 @@ begin
         queryType := SELL;
 
         // 수집 일자 유형 W-작성일자, I-발행일자, S-전송일자
-        DType := 'W';
+        DType := 'S';
 
         // 시작일자, 날자형식(yyyyMMdd)
-        SDate := '20180601';
+        SDate := '20191101';
 
         // 종료일자, 날자형식(yyyyMMdd)
-        EDate := '20190201';
+        EDate := '20191231';
 
         try
                 jobID := htTaxinvoiceService.RequestJob(txtCorpNum.text, queryType, DType, SDate, EDate);
