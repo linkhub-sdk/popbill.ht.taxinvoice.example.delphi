@@ -1,6 +1,6 @@
 object TfrmExample: TTfrmExample
-  Left = 414
-  Top = 152
+  Left = 697
+  Top = 176
   Width = 1106
   Height = 792
   Caption = '팝빌 홈택스 전자(세금)계산서 연동 API SDK Example'
@@ -34,12 +34,12 @@ object TfrmExample: TTfrmExample
     Left = 8
     Top = 40
     Width = 1081
-    Height = 161
+    Height = 177
     Caption = '팝빌 기본 API'
     TabOrder = 0
     object GroupBox9: TGroupBox
       Left = 8
-      Top = 24
+      Top = 16
       Width = 137
       Height = 121
       Caption = '회원가입'
@@ -74,7 +74,7 @@ object TfrmExample: TTfrmExample
     end
     object GroupBox11: TGroupBox
       Left = 152
-      Top = 24
+      Top = 16
       Width = 145
       Height = 121
       Caption = '포인트 관련'
@@ -91,14 +91,14 @@ object TfrmExample: TTfrmExample
     end
     object GroupBox4: TGroupBox
       Left = 608
-      Top = 24
+      Top = 16
       Width = 145
-      Height = 121
+      Height = 153
       Caption = '담당자 관련'
       TabOrder = 2
       object btnUpdateContact: TButton
         Left = 8
-        Top = 88
+        Top = 120
         Width = 129
         Height = 25
         Caption = '담당자 정보 수정'
@@ -116,17 +116,26 @@ object TfrmExample: TTfrmExample
       end
       object btnListContact: TButton
         Left = 8
-        Top = 56
+        Top = 88
         Width = 129
         Height = 25
         Caption = '담당자 목록 조회'
         TabOrder = 2
         OnClick = btnListContactClick
       end
+      object btnGetContactInfo: TButton
+        Left = 8
+        Top = 56
+        Width = 129
+        Height = 25
+        Caption = '담당자 정보 확인'
+        TabOrder = 3
+        OnClick = btnGetContactInfoClick
+      end
     end
     object GroupBox16: TGroupBox
       Left = 760
-      Top = 24
+      Top = 16
       Width = 145
       Height = 121
       Caption = '회사정보 관련'
@@ -152,7 +161,7 @@ object TfrmExample: TTfrmExample
     end
     object GroupBox2: TGroupBox
       Left = 912
-      Top = 24
+      Top = 16
       Width = 153
       Height = 121
       Caption = '기타'
@@ -169,9 +178,9 @@ object TfrmExample: TTfrmExample
     end
     object GroupBox7: TGroupBox
       Left = 304
-      Top = 24
+      Top = 16
       Width = 146
-      Height = 121
+      Height = 153
       Caption = '연동과금 포인트'
       TabOrder = 5
       object btnGetChargeURL: TButton
@@ -192,10 +201,28 @@ object TfrmExample: TTfrmExample
         TabOrder = 1
         OnClick = btnGetBalanceClick
       end
+      object btnGetPaymentURL: TButton
+        Left = 8
+        Top = 88
+        Width = 129
+        Height = 25
+        Caption = '포인트 결제내역 URL'
+        TabOrder = 2
+        OnClick = btnGetPaymentURLClick
+      end
+      object btnGetUseHistoryURL: TButton
+        Left = 8
+        Top = 120
+        Width = 129
+        Height = 25
+        Caption = '포인트 사용내역  URL'
+        TabOrder = 3
+        OnClick = btnGetUseHistoryURLClick
+      end
     end
     object GroupBox10: TGroupBox
       Left = 456
-      Top = 24
+      Top = 16
       Width = 147
       Height = 121
       Caption = '파트너과금 포인트'
@@ -240,7 +267,7 @@ object TfrmExample: TTfrmExample
   end
   object TGroupBox
     Left = 8
-    Top = 216
+    Top = 224
     Width = 1081
     Height = 529
     Caption = '홈택스 전자세금계산서 연계 관련 API '
