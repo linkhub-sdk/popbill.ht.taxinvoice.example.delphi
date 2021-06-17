@@ -246,7 +246,14 @@ begin
                         Exit;
                 end;
         end;
-        ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
+        if htTaxinvoiceService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : '+ IntToStr(htTaxinvoiceService.LastErrCode) + #10#13 +'응답메시지 : '+  htTaxinvoiceService.LastErrMessage);
+        end
+        else
+        begin
+                ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
+        end;
 end;
 
 procedure TTfrmExample.btnCheckIDClick(Sender: TObject);
@@ -266,7 +273,14 @@ begin
                         Exit;
                 end;
         end;
-        ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
+        if htTaxinvoiceService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : '+ IntToStr(htTaxinvoiceService.LastErrCode) + #10#13 +'응답메시지 : '+  htTaxinvoiceService.LastErrMessage);
+        end
+        else
+        begin
+                ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
+        end;
 end;
 
 procedure TTfrmExample.btnJoinMemberClick(Sender: TObject);
@@ -330,7 +344,15 @@ begin
                         Exit;
                 end;
         end;
-        ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
+        if htTaxinvoiceService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : '+ IntToStr(htTaxinvoiceService.LastErrCode) + #10#13 +'응답메시지 : '+  htTaxinvoiceService.LastErrMessage);
+        end
+        else
+        begin
+                ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
+        end;
+
 end;
 
 procedure TTfrmExample.btnGetBalanceClick(Sender: TObject);
@@ -352,7 +374,14 @@ begin
                         Exit;
                 end;
         end;
-        ShowMessage('잔여포인트 : ' + FloatToStr(balance));
+        if htTaxinvoiceService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : '+ IntToStr(htTaxinvoiceService.LastErrCode) + #10#13 +'응답메시지 : '+  htTaxinvoiceService.LastErrMessage);
+        end
+        else
+        begin
+                ShowMessage('잔여포인트 : ' + FloatToStr(balance));
+        end;
 end;
 
 procedure TTfrmExample.btnGetPartnerBalanceClick(Sender: TObject);
@@ -374,7 +403,15 @@ begin
                         Exit;
                 end;
         end;
-        ShowMessage('잔여포인트 : ' + FloatToStr(balance));
+        if htTaxinvoiceService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : '+ IntToStr(htTaxinvoiceService.LastErrCode) + #10#13 +'응답메시지 : '+  htTaxinvoiceService.LastErrMessage);
+        end
+        else
+        begin
+                ShowMessage('잔여포인트 : ' + FloatToStr(balance));
+        end;
+
 end;
 
 procedure TTfrmExample.btnRegistContactClick(Sender: TObject);
@@ -419,7 +456,15 @@ begin
                         Exit;
                 end;
         end;
-        ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
+        if htTaxinvoiceService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : '+ IntToStr(htTaxinvoiceService.LastErrCode) + #10#13 +'응답메시지 : '+  htTaxinvoiceService.LastErrMessage);
+        end
+        else
+        begin
+                ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
+        end;
+
 end;
 
 procedure TTfrmExample.btnListContactClick(Sender: TObject);
@@ -442,23 +487,30 @@ begin
                 end;
         end;
 
-        tmp := 'id(아이디) | email(이메일) | hp(휴대폰) | personName(성명) | searchRole(담당자 조회 권한) | ';
-        tmp := tmp + 'tel(연락처) | fax(팩스) | mgrYN(관리자 여부) | regDT(등록일시) | state(상태)' + #13;
-
-        for i := 0 to Length(InfoList) -1 do
+        if htTaxinvoiceService.LastErrCode <> 0 then
         begin
-            tmp := tmp + InfoList[i].id + ' | ';
-            tmp := tmp + InfoList[i].email + ' | ';
-            tmp := tmp + InfoList[i].hp + ' | ';
-            tmp := tmp + InfoList[i].personName + ' | ';
-            tmp := tmp + InfoList[i].searchRole + ' | ';
-            tmp := tmp + InfoList[i].tel + ' | ';
-            tmp := tmp + InfoList[i].fax + ' | ';
-            tmp := tmp + BoolToStr(InfoList[i].mgrYN) + ' | ';
-            tmp := tmp + InfoList[i].regDT + ' | ';
-            tmp := tmp + IntToStr(InfoList[i].state) + #13;
+                ShowMessage('응답코드 : '+ IntToStr(htTaxinvoiceService.LastErrCode) + #10#13 +'응답메시지 : '+  htTaxinvoiceService.LastErrMessage);
+        end
+        else
+        begin
+                tmp := 'id(아이디) | email(이메일) | hp(휴대폰) | personName(성명) | searchRole(담당자 조회 권한) | ';
+                tmp := tmp + 'tel(연락처) | fax(팩스) | mgrYN(관리자 여부) | regDT(등록일시) | state(상태)' + #13;
+
+                for i := 0 to Length(InfoList) -1 do
+                begin
+                    tmp := tmp + InfoList[i].id + ' | ';
+                    tmp := tmp + InfoList[i].email + ' | ';
+                    tmp := tmp + InfoList[i].hp + ' | ';
+                    tmp := tmp + InfoList[i].personName + ' | ';
+                    tmp := tmp + InfoList[i].searchRole + ' | ';
+                    tmp := tmp + InfoList[i].tel + ' | ';
+                    tmp := tmp + InfoList[i].fax + ' | ';
+                    tmp := tmp + BoolToStr(InfoList[i].mgrYN) + ' | ';
+                    tmp := tmp + InfoList[i].regDT + ' | ';
+                    tmp := tmp + IntToStr(InfoList[i].state) + #13;
+                end;
+                ShowMessage(tmp);
         end;
-        ShowMessage(tmp);
 end;
 
 procedure TTfrmExample.btnUpdateContactClick(Sender: TObject);
@@ -502,7 +554,15 @@ begin
                         Exit;
                 end;
         end;
-        ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
+        if htTaxinvoiceService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : '+ IntToStr(htTaxinvoiceService.LastErrCode) + #10#13 +'응답메시지 : '+  htTaxinvoiceService.LastErrMessage);
+        end
+        else
+        begin
+                ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
+        end;
+
 end;
 
 procedure TTfrmExample.btnGetCorpInfoClick(Sender: TObject);
@@ -523,13 +583,20 @@ begin
                         Exit;
                 end;
         end;
+        if htTaxinvoiceService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : '+ IntToStr(htTaxinvoiceService.LastErrCode) + #10#13 +'응답메시지 : '+  htTaxinvoiceService.LastErrMessage);
+        end
+        else
+        begin
+                tmp := 'CorpName (상호) : ' + corpInfo.CorpName + #13;
+                tmp := tmp + 'CeoName (대표자성명) : ' + corpInfo.CeoName + #13;
+                tmp := tmp + 'BizType (업태) : ' + corpInfo.BizType + #13;
+                tmp := tmp + 'BizClass (종목) : ' + corpInfo.BizClass + #13;
+                tmp := tmp + 'Addr (주소) : ' + corpInfo.Addr + #13;
+                ShowMessage(tmp);
+        end;
 
-        tmp := 'CorpName (상호) : ' + corpInfo.CorpName + #13;
-        tmp := tmp + 'CeoName (대표자성명) : ' + corpInfo.CeoName + #13;
-        tmp := tmp + 'BizType (업태) : ' + corpInfo.BizType + #13;
-        tmp := tmp + 'BizClass (종목) : ' + corpInfo.BizClass + #13;
-        tmp := tmp + 'Addr (주소) : ' + corpInfo.Addr + #13;
-        ShowMessage(tmp);
 end;
 
 procedure TTfrmExample.btnUpdateCorpInfoClick(Sender: TObject);
@@ -567,7 +634,15 @@ begin
                         Exit;
                 end;
         end;
-        ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
+        if htTaxinvoiceService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : '+ IntToStr(htTaxinvoiceService.LastErrCode) + #10#13 +'응답메시지 : '+  htTaxinvoiceService.LastErrMessage);
+        end
+        else
+        begin
+                ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
+        end;
+
 end;
 
 procedure TTfrmExample.btnRequestJobClick(Sender: TObject);
@@ -1234,7 +1309,14 @@ begin
                         Exit;
                 end;
         end;
-        ShowMessage('팝빌 로그인 URL' + #13 + resultURL);
+         if htTaxinvoiceService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : '+ IntToStr(htTaxinvoiceService.LastErrCode) + #10#13 +'응답메시지 : '+  htTaxinvoiceService.LastErrMessage);
+        end
+        else
+        begin
+                ShowMessage('URL :' + #13 + resultURL);
+        end;
 end;
 
 procedure TTfrmExample.btnGetChargeURLClick(Sender: TObject);
@@ -1255,7 +1337,14 @@ begin
                         Exit;
                 end;
         end;
-        ShowMessage('포인트충전 URL ' + #13 + resultURL);
+         if htTaxinvoiceService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : '+ IntToStr(htTaxinvoiceService.LastErrCode) + #10#13 +'응답메시지 : '+  htTaxinvoiceService.LastErrMessage);
+        end
+        else
+        begin
+                ShowMessage('URL :' + #13 + resultURL);
+        end;
 end;
 
 procedure TTfrmExample.btnGetPartnerURL_CHRGClick(Sender: TObject);
@@ -1276,7 +1365,14 @@ begin
                         Exit;
                 end;
         end;
-        ShowMessage('파트너 포인트충전 URL ' + #13 + resultURL);
+         if htTaxinvoiceService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : '+ IntToStr(htTaxinvoiceService.LastErrCode) + #10#13 +'응답메시지 : '+  htTaxinvoiceService.LastErrMessage);
+        end
+        else
+        begin
+                ShowMessage('URL :' + #13 + resultURL);
+        end;
 end;
 
 procedure TTfrmExample.btnGetPopUpURLClick(Sender: TObject);
@@ -1299,7 +1395,15 @@ begin
                         Exit;
                 end;
         end;
-        ShowMessage('홈택스 전자세금계산서 보기 팝업 URL ' + #13 + resultURL);
+        if htTaxinvoiceService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : '+ IntToStr(htTaxinvoiceService.LastErrCode) + #10#13 +'응답메시지 : '+  htTaxinvoiceService.LastErrMessage);
+        end
+        else
+        begin
+                ShowMessage('URL :' + #13 + resultURL);
+        end;
+
 end;
 
 procedure TTfrmExample.btnCheckCertValidationClick(Sender: TObject);
@@ -1319,7 +1423,14 @@ begin
                         Exit;
                 end;
         end;
-        ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
+        if htTaxinvoiceService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : '+ IntToStr(htTaxinvoiceService.LastErrCode) + #10#13 +'응답메시지 : '+  htTaxinvoiceService.LastErrMessage);
+        end
+        else
+        begin
+                ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
+        end;
 end;
 
 procedure TTfrmExample.btnRegistDeptUserClick(Sender: TObject);
@@ -1346,7 +1457,14 @@ begin
                         Exit;
                 end;
         end;
-        ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
+        if htTaxinvoiceService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : '+ IntToStr(htTaxinvoiceService.LastErrCode) + #10#13 +'응답메시지 : '+  htTaxinvoiceService.LastErrMessage);
+        end
+        else
+        begin
+                ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
+        end;
 end;
 
 procedure TTfrmExample.btnCheckDeptUserClick(Sender: TObject);
@@ -1366,7 +1484,14 @@ begin
                         Exit;
                 end;
         end;
-        ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
+        if htTaxinvoiceService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : '+ IntToStr(htTaxinvoiceService.LastErrCode) + #10#13 +'응답메시지 : '+  htTaxinvoiceService.LastErrMessage);
+        end
+        else
+        begin
+                ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
+        end;
 end;
 
 procedure TTfrmExample.btnCheckLoginDeptUserClick(Sender: TObject);
@@ -1386,7 +1511,14 @@ begin
                         Exit;
                 end;
         end;
-        ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
+        if htTaxinvoiceService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : '+ IntToStr(htTaxinvoiceService.LastErrCode) + #10#13 +'응답메시지 : '+  htTaxinvoiceService.LastErrMessage);
+        end
+        else
+        begin
+                ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
+        end;
 end;
 
 procedure TTfrmExample.btnDeleteDeptUserClick(Sender: TObject);
@@ -1406,7 +1538,14 @@ begin
                         Exit;
                 end;
         end;
-        ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
+        if htTaxinvoiceService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : '+ IntToStr(htTaxinvoiceService.LastErrCode) + #10#13 +'응답메시지 : '+  htTaxinvoiceService.LastErrMessage);
+        end
+        else
+        begin
+                ShowMessage('응답코드 : '+ IntToStr(response.code) + #10#13 +'응답메시지 : '+  response.Message);
+        end;
 end;
 
 procedure TTfrmExample.btnGetPrintURLClick(Sender: TObject);
@@ -1423,14 +1562,21 @@ begin
 
         try
                 resultURL := htTaxinvoiceService.getPrintURL(txtCorpNum.Text, NTSConfirmNum);
-                txtUserID.text := resultURL;
+
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
                         Exit;
                 end;
         end;
-        ShowMessage('홈택스 전자세금계산서 인쇄 팝업 URL ' + #13 + resultURL);
+        if htTaxinvoiceService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : '+ IntToStr(htTaxinvoiceService.LastErrCode) + #10#13 +'응답메시지 : '+  htTaxinvoiceService.LastErrMessage);
+        end
+        else
+        begin
+                ShowMessage('URL :  ' + #13 + resultURL);
+        end;
 end;
 
 procedure TTfrmExample.btnGetPaymentURLClick(Sender: TObject);
@@ -1451,7 +1597,14 @@ begin
                         Exit;
                 end;
         end;
-        ShowMessage('URL :  ' + #13 + resultURL);
+        if htTaxinvoiceService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : '+ IntToStr(htTaxinvoiceService.LastErrCode) + #10#13 +'응답메시지 : '+  htTaxinvoiceService.LastErrMessage);
+        end
+        else
+        begin
+                ShowMessage('URL :  ' + #13 + resultURL);
+        end;
 end;
 
 procedure TTfrmExample.btnGetUseHistoryURLClick(Sender: TObject);
@@ -1472,8 +1625,14 @@ begin
                         Exit;
                 end;
         end;
-        ShowMessage('URL :  ' + #13 + resultURL);
-
+        if htTaxinvoiceService.LastErrCode <> 0 then
+        begin
+                ShowMessage('응답코드 : '+ IntToStr(htTaxinvoiceService.LastErrCode) + #10#13 +'응답메시지 : '+  htTaxinvoiceService.LastErrMessage);
+        end
+        else
+        begin
+                ShowMessage('URL :  ' + #13 + resultURL);
+        end;
 end;
 
 procedure TTfrmExample.btnGetContactInfoClick(Sender: TObject);
