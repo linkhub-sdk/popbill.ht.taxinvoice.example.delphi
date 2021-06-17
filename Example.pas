@@ -591,10 +591,10 @@ begin
         DType := 'S';
 
         // 시작일자, 날자형식(yyyyMMdd)
-        SDate := '20191101';
+        SDate := '20210601';
 
         // 종료일자, 날자형식(yyyyMMdd)
-        EDate := '20191231';
+        EDate := '20210615';
 
         try
                 jobID := htTaxinvoiceService.RequestJob(txtCorpNum.text, queryType, DType, SDate, EDate);
