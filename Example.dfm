@@ -516,7 +516,7 @@ object TfrmExample: TTfrmExample
         Top = 56
         Width = 185
         Height = 25
-        Caption = '공인인증서 만료일자 확인'
+        Caption = '공동인증서 만료일자 확인'
         TabOrder = 0
         OnClick = btnGetCertificateExpireDateClick
       end
@@ -534,7 +534,7 @@ object TfrmExample: TTfrmExample
         Top = 88
         Width = 185
         Height = 25
-        Caption = '공인인증서 로그인 테스트'
+        Caption = '공동인증서 로그인 테스트'
         TabOrder = 2
         OnClick = btnCheckCertValidationClick
       end

@@ -3,21 +3,21 @@
 { 팝빌 홈택스 전자세금계산서 매입/매출 API Delphi SDK Example
 {
 { - SDK 튜토리얼 : https://docs.popbill.com/httaxinvoice/tutorial/delphi }
-{ - 업데이트 일자 : 2021-06-15
-{ - 연동 기술지원 연락처 : 1600-9854 / 070-4304-2991
-{ - 연동 기술지원 이메일 : code@linkhub.co.kr
+{ - 업데이트 일자 : 2022-01-10
+{ - 연동 기술지원 연락처 : 1600-9854
+{ - 연동 기술지원 이메일 : code@linkhubcorp.com
 {
 { <테스트 연동개발 준비사항>
 { (1) 41, 44번 라인에 선언된 링크아이디(LinkID)와 비밀키(SecretKey)를
 {    링크허브 가입시 메일로 발급받은 인증정보로 수정
 { (2) 팝빌 개발용 사이트(test.popbill.com)에 연동회원으로 가입
 { (3) 홈택스 연동서비스를 이용하기 위해 팝빌에 인증정보를 등록합니다
-{     인증방법은 부서사용자 인증 공인인증서 인증 방식이 있습니다.
+{     인증방법은 부서사용자 인증 공동인증서 인증 방식이 있습니다.
 {     - 팝빌로그인 > [홈택스연동] > [환경설정] > [인증 관리] 메뉴에서
-{       [홈택스 부서사용자 등록] 혹은 [홈택스 공인인증서 등록]을 통해
+{       [홈택스 부서사용자 등록] 혹은 [홈택스 공동인증서 등록]을 통해
 {       인증정보를 등록합니다.
 {     - 홈택스연동 인증 관리 팝업 URL(GetCertificatePopUpURL)반환된 URL에
-{       접속하여 [홈택스 부서사용자 등록] 혹은 [홈택스 공인인증서 등록]을
+{       접속하여 [홈택스 부서사용자 등록] 혹은 [홈택스 공동인증서 등록]을
 {       통해 인증정보를 등록합니다.
 {******************************************************************************}
 
@@ -666,10 +666,10 @@ begin
         DType := 'S';
 
         // 시작일자, 날자형식(yyyyMMdd)
-        SDate := '20210601';
+        SDate := '20220101';
 
         // 종료일자, 날자형식(yyyyMMdd)
-        EDate := '20210615';
+        EDate := '20220110';
 
         try
                 jobID := htTaxinvoiceService.RequestJob(txtCorpNum.text, queryType, DType, SDate, EDate);
@@ -875,8 +875,6 @@ begin
                 tmp := tmp + 'message (응답 메시지) : ' + searchInfo.message + #13 + #13;
 
                 // 전자(세금)계산서 정보 출력
-                //  API호출시 반환되는 추가적인 전자(세금)계산서 항목은
-                //  [링크허브]팝빌 -홈택스 전자세금계산서 API 연동매뉴얼 '4.1.1. Search' 를 참조하시기 바랍니다.
                 for i := 0 to length(searchInfo.list) - 1 do
                 begin
                         StringGrid1.Cells[0, i+1] := searchInfo.list[i].ntsconfirmNum;   // 국세청 승인번호
@@ -1052,7 +1050,7 @@ begin
 
                 tmp := tmp + '========전자(세금)계산서 공급자 정보========' +#13;
                 tmp := tmp + 'invoicerCorpNum (공급자 사업자번호) : ' + taxinvoice.invoicerCorpNum +#13;
-                tmp := tmp + 'invoicerMgtKey (공급자 문서관리번호) : ' + taxinvoice.invoicerMgtKey +#13;
+                tmp := tmp + 'invoicerMgtKey (공급자 문서번호) : ' + taxinvoice.invoicerMgtKey +#13;
                 tmp := tmp + 'invoicerTaxRegID (공급자 종사업장번호) : ' + taxinvoice.invoicerTaxRegID +#13;
                 tmp := tmp + 'invoicerCorpName (공급자 상호) : ' + taxinvoice.invoicerCorpName +#13;
                 tmp := tmp + 'invoicerCEOName (공급자 대표자 성명) : ' + taxinvoice.invoicerCEOName +#13;
@@ -1137,7 +1135,7 @@ var
 begin
         {**********************************************************************}
         { 홈택스 연동 인증관리를 위한 URL을 반환 합니다.
-        { - 인증방식에는 부서사용자/공인인증서 인증 방식이 있습니다.
+        { - 인증방식에는 부서사용자/공동인증서 인증 방식이 있습니다.
         { - URL 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
         { - https://docs.popbill.com/httaxinvoice/delphi/api#GetCertificatePopUpURL       
         {**********************************************************************}
@@ -1196,7 +1194,7 @@ var
         expires : String;
 begin
         {**********************************************************************}
-        { 팝빌에 등록된 홈택스 공인인증서 만료일자를 확인합니다.
+        { 팝빌에 등록된 홈택스 공동인증서 만료일자를 확인합니다.
         { - https://docs.popbill.com/httaxinvoice/delphi/api#GetCertificateExpireDate
         {**********************************************************************}
 
@@ -1411,7 +1409,7 @@ var
         response : TResponse;
 begin
         {**********************************************************************}
-        { 팝빌에 등록된 공인인증서의 홈택스 로그인을 테스트한다.
+        { 팝빌에 등록된 공동인증서의 홈택스 로그인을 테스트한다.
         { - https://docs.popbill.com/httaxinvoice/delphi/api#CheckCertValidation
         {**********************************************************************}
 
