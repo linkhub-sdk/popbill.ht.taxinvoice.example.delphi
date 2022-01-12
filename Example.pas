@@ -8,10 +8,9 @@
 { - 연동 기술지원 이메일 : code@linkhubcorp.com
 {
 { <테스트 연동개발 준비사항>
-{ (1) 41, 44번 라인에 선언된 링크아이디(LinkID)와 비밀키(SecretKey)를
+{ (1) 40, 43번 라인에 선언된 링크아이디(LinkID)와 비밀키(SecretKey)를
 {    링크허브 가입시 메일로 발급받은 인증정보로 수정
-{ (2) 팝빌 개발용 사이트(test.popbill.com)에 연동회원으로 가입
-{ (3) 홈택스 연동서비스를 이용하기 위해 팝빌에 인증정보를 등록합니다
+{ (2) 홈택스 연동서비스를 이용하기 위해 팝빌에 인증정보를 등록합니다
 {     인증방법은 부서사용자 인증 공동인증서 인증 방식이 있습니다.
 {     - 팝빌로그인 > [홈택스연동] > [환경설정] > [인증 관리] 메뉴에서
 {       [홈택스 부서사용자 등록] 혹은 [홈택스 공동인증서 등록]을 통해
@@ -160,18 +159,17 @@ procedure TTfrmExample.FormCreate(Sender: TObject);
 begin
         htTaxinvoiceService := THometaxTIService.Create(LinkID,SecretKey);
 
-        //연동환경 설정값, true(개발용), false(상업용)
+        // 연동환경 설정, true-개발용, false-상업용
         htTaxinvoiceService.IsTest := true;
 
-        //Exception 처리 설정값. 미기재시 true(기본값)
+        // Exception 처리 설정, true-사용, false-미사용, 기본값(true)
         htTaxinvoiceService.IsThrowException := true;
 
-        //인증토큰 IP제한기능 사용여부, true(권장)
+        // 인증토큰 IP제한기능 사용여부, true-사용, false-미사용, 기본값(true)
         htTaxinvoiceService.IPRestrictOnOff := true;
 
-        //로컬시스템 시간 사용여부, true(사용), false(미사용) - 기본값
+        //로컬시스템 시간 사용여부, true-사용, false-미사용, 기본값(true)
         htTaxinvoiceService.UseLocalTimeYN := false;
-
 
         StringGrid1.Cells[0,0] := 'ntsconfirmNum';
         StringGrid1.Cells[1,0] := 'writeDate';
