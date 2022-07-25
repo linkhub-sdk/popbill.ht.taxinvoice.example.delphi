@@ -3,7 +3,7 @@
 { 팝빌 홈택스 전자세금계산서 매입/매출 API Delphi SDK Example
 {
 { - SDK 튜토리얼 : https://docs.popbill.com/httaxinvoice/tutorial/delphi }
-{ - 업데이트 일자 : 2022-04-07
+{ - 업데이트 일자 : 2022-07-25
 { - 연동 기술지원 연락처 : 1600-9854
 { - 연동 기술지원 이메일 : code@linkhubcorp.com
 {
@@ -1118,7 +1118,7 @@ begin
         {**********************************************************************}
 
         try
-                resultURL := htTaxinvoiceService.GetCertificatePopUpURL(txtCorpNum.Text);
+                resultURL := htTaxinvoiceService.GetCertificatePopUpURL(txtCorpNum.Text, txtUserID.Text);
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
@@ -1147,7 +1147,7 @@ begin
         {**********************************************************************}
 
         try
-                resultURL := htTaxinvoiceService.GetFlatRatePopUpURL(txtCorpNum.Text);
+                resultURL := htTaxinvoiceService.GetFlatRatePopUpURL(txtCorpNum.Text, txtUserID.Text);
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
@@ -1363,7 +1363,7 @@ begin
         NTSConfirmNum := txtntsconfirmNum.text;
 
         try
-                resultURL := htTaxinvoiceService.getPopUpURL(txtCorpNum.Text, NTSConfirmNum);
+                resultURL := htTaxinvoiceService.getPopUpURL(txtCorpNum.Text, NTSConfirmNum, txtUserID.Text);
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
@@ -1536,7 +1536,7 @@ begin
         NTSConfirmNum := txtntsconfirmNum.text;
 
         try
-                resultURL := htTaxinvoiceService.getPrintURL(txtCorpNum.Text, NTSConfirmNum);
+                resultURL := htTaxinvoiceService.getPrintURL(txtCorpNum.Text, NTSConfirmNum, txtUserID.Text);
 
         except
                 on le : EPopbillException do begin
@@ -1565,7 +1565,7 @@ begin
         {**********************************************************************}
         
         try
-                resultURL := htTaxinvoiceService.getPaymentURL(txtCorpNum.Text);
+                resultURL := htTaxinvoiceService.getPaymentURL(txtCorpNum.Text, txtUserID.Text);
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
@@ -1593,7 +1593,7 @@ begin
         {**********************************************************************}
 
         try
-                resultURL := htTaxinvoiceService.getUseHistoryURL(txtCorpNum.Text);
+                resultURL := htTaxinvoiceService.getUseHistoryURL(txtCorpNum.Text, txtUserID.Text);
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
