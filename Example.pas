@@ -103,6 +103,8 @@ type
     btnGetPaymentURL: TButton;
     btnGetUseHistoryURL: TButton;
     btnGetContactInfo: TButton;
+    txtURL: TEdit;
+    Label5: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure btnCheckIsMemberClick(Sender: TObject);
     procedure btnCheckIDClick(Sender: TObject);
@@ -1119,6 +1121,7 @@ begin
 
         try
                 resultURL := htTaxinvoiceService.GetCertificatePopUpURL(txtCorpNum.Text, txtUserID.Text);
+                txtURL.Text := resultURL;
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
@@ -1148,6 +1151,7 @@ begin
 
         try
                 resultURL := htTaxinvoiceService.GetFlatRatePopUpURL(txtCorpNum.Text, txtUserID.Text);
+                txtURL.Text := resultURL;
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
@@ -1278,6 +1282,7 @@ begin
 
         try
                 resultURL := htTaxinvoiceService.getAccessURL(txtCorpNum.Text, txtUserID.Text);
+                txtURL.Text := resultURL;
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
@@ -1306,6 +1311,7 @@ begin
 
         try
                 resultURL := htTaxinvoiceService.getChargeURL(txtCorpNum.Text, txtUserID.Text);
+                txtURL.Text := resultURL;
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
@@ -1334,6 +1340,7 @@ begin
 
         try
                 resultURL := htTaxinvoiceService.getPartnerURL(txtCorpNum.Text, 'CHRG');
+                txtURL.Text := resultURL;
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
@@ -1361,9 +1368,11 @@ begin
         {**********************************************************************}
 
         NTSConfirmNum := txtntsconfirmNum.text;
+        txtURL.Text := resultURL;
 
         try
                 resultURL := htTaxinvoiceService.getPopUpURL(txtCorpNum.Text, NTSConfirmNum, txtUserID.Text);
+                txtURL.Text := resultURL;
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : '+ IntToStr(le.code) + #10#13 +'응답메시지 : '+  le.Message);
@@ -1537,6 +1546,7 @@ begin
 
         try
                 resultURL := htTaxinvoiceService.getPrintURL(txtCorpNum.Text, NTSConfirmNum, txtUserID.Text);
+                txtURL.Text := resultURL;
 
         except
                 on le : EPopbillException do begin
@@ -1566,6 +1576,7 @@ begin
         
         try
                 resultURL := htTaxinvoiceService.getPaymentURL(txtCorpNum.Text, txtUserID.Text);
+                txtURL.Text := resultURL;
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
@@ -1594,6 +1605,7 @@ begin
 
         try
                 resultURL := htTaxinvoiceService.getUseHistoryURL(txtCorpNum.Text, txtUserID.Text);
+                txtURL.Text := resultURL;
         except
                 on le : EPopbillException do begin
                         ShowMessage('응답코드 : ' + IntToStr(le.code) + #10#13 +'응답메시지 : '+ le.Message);
