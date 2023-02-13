@@ -2,7 +2,7 @@
 {
 { 팝빌 홈택스 전자세금계산서 매입/매출 API Delphi SDK Example
 {
-{ - SDK 튜토리얼 : https://docs.popbill.com/httaxinvoice/tutorial/delphi }
+{ - SDK 튜토리얼 : https://developers.popbill.com/guide/httaxinvoice/delphi/getting-started/tutorial }
 { - 업데이트 일자 : 2022-07-25
 { - 연동 기술지원 연락처 : 1600-9854
 { - 연동 기술지원 이메일 : code@linkhubcorp.com
@@ -234,7 +234,7 @@ var
 begin
         {**********************************************************************}
         { 사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
-        { - https://docs.popbill.com/httaxinvoice/delphi/api#CheckIsMember
+        { - https://developers.popbill.com/reference/httaxinvoice/delphi/api/member#CheckIsMember
         {**********************************************************************}
 
         try
@@ -261,7 +261,7 @@ var
 begin
         {**********************************************************************}
         { 사용하고자 하는 아이디의 중복여부를 확인합니다.
-        { - https://docs.popbill.com/httaxinvoice/delphi/api#CheckID
+        { - https://developers.popbill.com/reference/httaxinvoice/delphi/api/member#CheckID
         {**********************************************************************}
 
         try
@@ -289,7 +289,7 @@ var
 begin
         {**********************************************************************}
         { 사용자를 연동회원으로 가입처리합니다.
-        { - https://docs.popbill.com/httaxinvoice/delphi/api#JoinMember
+        { - https://developers.popbill.com/reference/httaxinvoice/delphi/api/member#JoinMember
         {**********************************************************************}
 
         // 링크아이디
@@ -353,7 +353,7 @@ var
 begin
         {**********************************************************************}
         { 연동회원의 잔여포인트를 확인합니다.
-        { - https://docs.popbill.com/httaxinvoice/delphi/api#GetBalance  
+        { - https://developers.popbill.com/reference/httaxinvoice/delphi/api/point#GetBalance  
         {**********************************************************************}
 
         try
@@ -380,7 +380,7 @@ var
 begin
         {**********************************************************************}
         { 파트너의 잔여포인트를 확인합니다.
-        { - https://docs.popbill.com/httaxinvoice/delphi/api#GetPartnerBalance
+        { - https://developers.popbill.com/reference/httaxinvoice/delphi/api/point#GetPartnerBalance
         {**********************************************************************}
 
         try
@@ -409,7 +409,7 @@ var
 begin
         {**********************************************************************}
         { 연동회원 사업자번호에 담당자(팝빌 로그인 계정)를 추가합니다.
-        { - https://docs.popbill.com/httaxinvoice/delphi/api#RegistContact
+        { - https://developers.popbill.com/reference/httaxinvoice/delphi/api/member#RegistContact
         {**********************************************************************}
 
         // [필수] 담당자 아이디 (6자 이상 50자 미만)
@@ -457,7 +457,7 @@ var
 begin
         {**********************************************************************}
         { 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 목록을 확인합니다.
-        { - https://docs.popbill.com/httaxinvoice/delphi/api#ListContact
+        { - https://developers.popbill.com/reference/httaxinvoice/delphi/api/member#ListContact
         {**********************************************************************}
 
         try
@@ -500,7 +500,7 @@ var
 begin
         {**********************************************************************}
         { 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보를 수정합니다.
-        { - https://docs.popbill.com/httaxinvoice/delphi/api#UpdateContact
+        { - https://developers.popbill.com/reference/httaxinvoice/delphi/api/member#UpdateContact
         {**********************************************************************}
 
         contactInfo := TContactInfo.Create;
@@ -546,7 +546,7 @@ var
 begin
         {**********************************************************************}
         { 연동회원의 회사정보를 확인합니다.
-        { - https://docs.popbill.com/httaxinvoice/delphi/api#GetCorpInfo
+        { - https://developers.popbill.com/reference/httaxinvoice/delphi/api/member#GetCorpInfo
         {**********************************************************************}
 
         try
@@ -580,7 +580,7 @@ var
 begin
         {**********************************************************************}
         { 연동회원의 회사정보를 수정합니다.
-        { - https://docs.popbill.com/httaxinvoice/delphi/api#UpdateCorpInfo
+        { - https://developers.popbill.com/reference/httaxinvoice/delphi/api/member#UpdateCorpInfo
         {**********************************************************************}
 
         corpInfo := TCorpInfo.Create;
@@ -630,7 +630,7 @@ begin
         {**********************************************************************}
         { 홈택스에 신고된 전자세금계산서 매입/매출 내역 수집을 팝빌에 요청합니다. (조회기간 단위 : 최대 3개월)
         { - 주기적으로 자체 DB에 세금계산서 정보를 INSERT 하는 경우, 조회할 일자 유형(DType) 값을 "S"로 하는 것을 권장합니다.
-        { - https://docs.popbill.com/httaxinvoice/delphi/api#RequestJob
+        { - https://developers.popbill.com/reference/httaxinvoice/delphi/api/job#RequestJob
         {**********************************************************************}
 
         // 전자세금계산서 유형 SELL- 매출, BUY- 매입, TRUSTEE-위수탁
@@ -680,7 +680,7 @@ begin
         {   수집 결과 내역 조회(Search) 또는 수집 결과 요약 정보 조회(Summary)를 해야합니다.
         { - 작업 상태(jobState)가 3(완료)이지만 수집 결과 코드(errorCode)가 1(수집성공)이 아닌 경우에는
         {   오류메시지(errorReason)로 수집 실패에 대한 원인을 파악할 수 있습니다.                                
-        { - https://docs.popbill.com/httaxinvoice/delphi/api#GetJobState
+        { - https://developers.popbill.com/reference/httaxinvoice/delphi/api/job#GetJobState
         {**********************************************************************}
 
         try
@@ -724,7 +724,7 @@ begin
         {**********************************************************************}
         { 전자세금계산서 매입/매출 내역 수집요청에 대한 상태 목록을 확인합니다.
         { - 수집 요청 후 1시간이 경과한 수집 요청건은 상태정보가 반환되지 않습니다.                
-        { - https://docs.popbill.com/httaxinvoice/delphi/api#ListActiveState
+        { - https://developers.popbill.com/reference/httaxinvoice/delphi/api/job#ListActiveJob
         {**********************************************************************}
 
         try
@@ -787,7 +787,7 @@ var
 begin
         {**********************************************************************}
         { 수집 상태 확인(GetJobState API) 함수를 통해 상태 정보가 확인된 작업아이디를 활용하여 수집된 전자세금계산서 매입/매출 내역을 조회합니다.
-        { - https://docs.popbill.com/httaxinvoice/delphi/api#Search
+        { - https://developers.popbill.com/reference/httaxinvoice/delphi/api/search#Search
         {**********************************************************************}
 
         // 문서형태 배열, N - 일반 전자(세금)계산서, M - 수정(전자)세금계산서
@@ -921,7 +921,7 @@ begin
         {**********************************************************************}
         { 수집 상태 확인(GetJobState API) 함수를 통해 상태 정보가 확인된 작업아이디를 활용하여 수집된 전자세금계산서 매입/매출 내역의 요약 정보를 조회합니다.
         { - 요약 정보 : 전자세금계산서 수집 건수, 공급가액 합계, 세액 합계, 합계 금액  
-        {  - https://docs.popbill.com/httaxinvoice/delphi/api#Summary
+        {  - https://developers.popbill.com/reference/httaxinvoice/delphi/api/search#Summary
         {**********************************************************************}
 
         // 문서형태 배열, N - 일반 전자(세금)계산서, M - 수정(전자)세금계산서
@@ -988,7 +988,7 @@ var
 begin
         {**********************************************************************}
         { 국세청 승인번호를 통해 수집한 전자세금계산서 1건의 상세정보를 반환합니다.               
-        { - https://docs.popbill.com/httaxinvoice/delphi/api#GetTaxinvoice
+        { - https://developers.popbill.com/reference/httaxinvoice/delphi/api/search#GetTaxinvoice
         {**********************************************************************}
 
         ntsConfirmNum := txtntsconfirmNum.Text;
@@ -1082,7 +1082,7 @@ var
 begin
         {**********************************************************************}
         { 국세청 승인번호를 통해 수집한 전자세금계산서 1건의 상세정보를 XML 형태의 문자열로 반환합니다.
-        { - https://docs.popbill.com/httaxinvoice/delphi/api#GetXML
+        { - https://developers.popbill.com/reference/httaxinvoice/delphi/api/search#GetXML
         {*************************************"********************************}
 
         ntsConfirmNum := txtntsconfirmNum.Text;
@@ -1116,7 +1116,7 @@ begin
         {**********************************************************************}
         { 홈택스연동 인증정보를 관리하는 페이지의 팝업 URL을 반환합니다.
         { - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-        { - https://docs.popbill.com/httaxinvoice/delphi/api#GetCertificatePopUpURL       
+        { - https://developers.popbill.com/reference/httaxinvoice/delphi/api/cert#GetCertificatePopUpURL
         {**********************************************************************}
 
         try
@@ -1146,7 +1146,7 @@ begin
         {**********************************************************************}
         { 홈택스연동 정액제 서비스 신청 페이지의 팝업 URL을 반환합니다.
         { - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.       ㄴ
-        { - https://docs.popbill.com/httaxinvoice/delphi/api#GetFlatRatePopUpURL
+        { - https://developers.popbill.com/reference/httaxinvoice/delphi/api/point#GetFlatRatePopUpURL
         {**********************************************************************}
 
         try
@@ -1176,7 +1176,7 @@ var
 begin
         {**********************************************************************}
         { 팝빌에 등록된 인증서 만료일자를 확인합니다.
-        { - https://docs.popbill.com/httaxinvoice/delphi/api#GetCertificateExpireDate
+        { - https://developers.popbill.com/reference/httaxinvoice/delphi/api/cert#GetCertificateExpireDate
         {**********************************************************************}
 
         try
@@ -1206,7 +1206,7 @@ var
 begin
         {**********************************************************************}
         { 홈택스연동 정액제 서비스 상태를 확인합니다.
-        { - https://docs.popbill.com/httaxinvoice/delphi/api#GetFlatRateState
+        { - https://developers.popbill.com/reference/httaxinvoice/delphi/api/point#GetFlatRateState
         {**********************************************************************}
 
         try
@@ -1245,7 +1245,7 @@ var
 begin
         {**********************************************************************}
         { 팝빌 홈택스연동(세금) API 서비스 과금정보를 확인합니다.
-        { - https://docs.popbill.com/httaxinvoice/delphi/api#GetChargeInfo
+        { - https://developers.popbill.com/reference/httaxinvoice/delphi/api/point#GetChargeInfo
         {**********************************************************************}
 
         try
@@ -1277,7 +1277,7 @@ begin
         {**********************************************************************}
         { 팝빌 사이트에 로그인 상태로 접근할 수 있는 페이지의 팝업 URL을 반환합니다.
         { - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-        { - https://docs.popbill.com/httaxinvoice/delphi/api#GetAccessURL
+        { - https://developers.popbill.com/reference/httaxinvoice/delphi/api/member#GetAccessURL
         {**********************************************************************}
 
         try
@@ -1306,7 +1306,7 @@ begin
         {**********************************************************************}
         { 연동회원 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.                            
         { - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-        { - https://docs.popbill.com/httaxinvoice/delphi/api#GetChargeURL
+        { - https://developers.popbill.com/reference/httaxinvoice/delphi/api/point#GetChargeURL
         {**********************************************************************}
 
         try
@@ -1335,7 +1335,7 @@ begin
         {**********************************************************************}
         { 파트너 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
         { - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-        { - https://docs.popbill.com/httaxinvoice/delphi/api#GetPartnerURL      
+        { - https://developers.popbill.com/reference/httaxinvoice/delphi/api/point#GetPartnerURL      
         {**********************************************************************}
 
         try
@@ -1364,7 +1364,7 @@ begin
         {**********************************************************************}
         { 수집된 전자세금계산서 1건의 상세내역을 확인하는 페이지의 팝업 URL을 반환합니다.
         { - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-        { - https://docs.popbill.com/httaxinvoice/delphi/api#GetPopUpURL      
+        { - https://developers.popbill.com/reference/httaxinvoice/delphi/api/search#GetPopUpURL
         {**********************************************************************}
 
         NTSConfirmNum := txtntsconfirmNum.text;
@@ -1396,7 +1396,7 @@ var
 begin
         {**********************************************************************}
         { 팝빌에 등록된 인증서로 홈택스 로그인 가능 여부를 확인합니다.
-        { - https://docs.popbill.com/httaxinvoice/delphi/api#CheckCertValidation
+        { - https://developers.popbill.com/reference/httaxinvoice/delphi/api/cert#CheckCertValidation
         {**********************************************************************}
 
         try
@@ -1424,7 +1424,7 @@ var
 begin
         {**********************************************************************}
         { 홈택스연동 인증을 위해 팝빌에 전자세금계산서용 부서사용자 계정을 등록합니다.
-        { - https://docs.popbill.com/httaxinvoice/delphi/api#RegistDeptUser
+        { - https://developers.popbill.com/reference/httaxinvoice/delphi/api/cert#RegistDeptUser
         {**********************************************************************}
 
         //홈택스에서 생성한 전자세금계산서 부서사용자 아이디
@@ -1457,7 +1457,7 @@ var
 begin
         {**********************************************************************}
         { 홈택스연동 인증을 위해 팝빌에 등록된 전자세금계산서용 부서사용자 계정을 확인합니다.
-        { - https://docs.popbill.com/httaxinvoice/delphi/api#CheckDeptUser
+        { - https://developers.popbill.com/reference/httaxinvoice/delphi/api/cert#CheckDeptUser
         {**********************************************************************}
 
         try
@@ -1484,7 +1484,7 @@ var
 begin
         {**********************************************************************}
         { 팝빌에 등록된 전자세금계산서용 부서사용자 계정 정보로 홈택스 로그인 가능 여부를 확인합니다.
-        { - https://docs.popbill.com/httaxinvoice/delphi/api#CheckLoginDeptUser
+        { - https://developers.popbill.com/reference/httaxinvoice/delphi/api/cert#CheckLoginDeptUser
         {**********************************************************************}
 
         try
@@ -1511,7 +1511,7 @@ var
 begin
         {**********************************************************************}
         { 팝빌에 등록된 홈택스 전자세금계산서용 부서사용자 계정을 삭제합니다.
-        { - https://docs.popbill.com/httaxinvoice/delphi/api#DeleteDeptUser
+        { - https://developers.popbill.com/reference/httaxinvoice/delphi/api/cert#DeleteDeptUser
         {**********************************************************************}
 
         try
@@ -1539,7 +1539,7 @@ begin
         {**********************************************************************}
         { 수집된 전자세금계산서 1건의 상세내역을 인쇄하는 페이지의 URL을 반환합니다.
         { - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-        { - https://docs.popbill.com/httaxinvoice/delphi/api#GetPrintURL
+        { - https://developers.popbill.com/reference/httaxinvoice/delphi/api/search#GetPrintURL
         {**********************************************************************}
 
         NTSConfirmNum := txtntsconfirmNum.text;
@@ -1571,7 +1571,7 @@ begin
         {**********************************************************************}
         { 연동회원 포인트 결제내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
         { - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-        { - https://docs.popbill.com/httaxinvoice/delphi/api#GetPaymentURL
+        { - https://developers.popbill.com/reference/httaxinvoice/delphi/api/point#GetPaymentURL
         {**********************************************************************}
         
         try
@@ -1600,7 +1600,7 @@ begin
         {**********************************************************************}
         { 연동회원 포인트 사용내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
         { - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-        { - https://docs.popbill.com/httaxinvoice/delphi/api#GetUseHistoryURL
+        { - https://developers.popbill.com/reference/httaxinvoice/delphi/api/point#GetUseHistoryURL
         {**********************************************************************}
 
         try
@@ -1630,7 +1630,7 @@ var
 begin
         {**********************************************************************}
         { 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보를 확인합니다.
-        { - https://docs.popbill.com/httaxinvoice/delphi/api#GetContactInfo
+        { - https://developers.popbill.com/reference/httaxinvoice/delphi/api/member#GetContactInfo
         {**********************************************************************}
 
         contactID := 'testkorea';
